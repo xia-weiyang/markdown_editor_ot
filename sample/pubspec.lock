@@ -76,6 +76,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_markdown:
+    dependency: transitive
+    description:
+      name: flutter_markdown
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -158,6 +165,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.11.3+2"
+  markdown:
+    dependency: transitive
+    description:
+      name: markdown
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.2"
   markdown_editor:
     dependency: "direct main"
     description:
