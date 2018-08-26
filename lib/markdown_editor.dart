@@ -4,6 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:markdown_editor/editor.dart';
 import 'package:markdown_editor/preview.dart';
 
+class MarkdownText {
+  const MarkdownText(this.title, this.text);
+
+  final String title;
+  final String text;
+}
+
+enum PageType { editor, preview }
+
 class MarkdownEditor extends StatefulWidget {
   MarkdownEditor({
     Key key,
@@ -19,12 +28,23 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
   TabController _controller;
   String previewText = '';
 
+  /// Get edited Markdown title and text
+  MarkdownText getMarkDownText() {
+    return MarkdownText(
+        editorKey.currentState.getTitle(), editorKey.currentState.getText());
+  }
+
+  /// Change current [PageType]
+  void setCurrentPage(PageType type) {
+    _controller.index = type.index;
+  }
+
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: PageType.values.length);
     _controller.addListener(() {
-      if (_controller.index == 1) {
+      if (_controller.index == PageType.preview.index) {
         setState(() {
           previewText = editorKey.currentState.getText();
         });
