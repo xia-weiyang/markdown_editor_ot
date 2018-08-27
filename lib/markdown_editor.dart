@@ -16,7 +16,10 @@ enum PageType { editor, preview }
 class MarkdownEditor extends StatefulWidget {
   MarkdownEditor({
     Key key,
+    this.padding = const EdgeInsets.all(0.0),
   }) : super(key: key);
+
+  final EdgeInsetsGeometry padding;
 
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
@@ -24,14 +27,14 @@ class MarkdownEditor extends StatefulWidget {
 
 class MarkdownEditorWidgetState extends State<MarkdownEditor>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<MdEditorState> editorKey = GlobalKey();
+  final GlobalKey<MdEditorState> _editorKey = GlobalKey();
   TabController _controller;
-  String previewText = '';
+  String _previewText = '';
 
   /// Get edited Markdown title and text
   MarkdownText getMarkDownText() {
     return MarkdownText(
-        editorKey.currentState.getTitle(), editorKey.currentState.getText());
+        _editorKey.currentState.getTitle(), _editorKey.currentState.getText());
   }
 
   /// Change current [PageType]
@@ -46,7 +49,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
     _controller.addListener(() {
       if (_controller.index == PageType.preview.index) {
         setState(() {
-          previewText = editorKey.currentState.getText();
+          _previewText = _editorKey.currentState.getText();
         });
       }
     });
@@ -65,12 +68,14 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
       children: <Widget>[
         SafeArea(
           child: MdEditor(
-            key: editorKey,
+            key: _editorKey,
+            padding: widget.padding,
           ),
         ),
         SafeArea(
           child: MdPreview(
-            text: previewText,
+            text: _previewText,
+            padding: widget.padding,
           ),
         ),
       ],
