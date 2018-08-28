@@ -21,6 +21,7 @@ class MarkdownEditor extends StatefulWidget {
     this.initText,
     this.hintTitle,
     this.hintText,
+    this.onTapLink,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -28,6 +29,9 @@ class MarkdownEditor extends StatefulWidget {
   final String initText;
   final String hintTitle;
   final String hintText;
+
+  /// see [MdPreview.onTapLink]
+  final TapLinkCallback onTapLink;
 
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
@@ -88,6 +92,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
           child: MdPreview(
             text: _previewText,
             padding: widget.padding,
+            onTapLink: widget.onTapLink,
           ),
         ),
       ],
