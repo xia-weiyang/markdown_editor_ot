@@ -17,9 +17,17 @@ class MarkdownEditor extends StatefulWidget {
   MarkdownEditor({
     Key key,
     this.padding = const EdgeInsets.all(0.0),
+    this.initTitle,
+    this.initText,
+    this.hintTitle,
+    this.hintText,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
+  final String initTitle;
+  final String initText;
+  final String hintTitle;
+  final String hintText;
 
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
@@ -70,6 +78,10 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
           child: MdEditor(
             key: _editorKey,
             padding: widget.padding,
+            initText: widget.initText,
+            initTitle: widget.initTitle,
+            hintText: widget.hintText,
+            hintTitle: widget.hintTitle,
           ),
         ),
         SafeArea(

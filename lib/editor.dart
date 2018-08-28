@@ -5,10 +5,18 @@ class MdEditor extends StatefulWidget {
     Key key,
     this.titleStyle,
     this.padding = const EdgeInsets.all(0.0),
+    this.initTitle,
+    this.initText,
+    this.hintTitle,
+    this.hintText,
   }) : super(key: key);
 
   final TextStyle titleStyle;
   final EdgeInsetsGeometry padding;
+  final String initTitle;
+  final String initText;
+  final String hintTitle;
+  final String hintText;
 
   @override
   State<StatefulWidget> createState() => MdEditorState();
@@ -30,6 +38,9 @@ class MdEditorState extends State<MdEditor> {
   @override
   void initState() {
     super.initState();
+    if (widget.initText != null && widget.initText.isNotEmpty) _maxLines = null;
+    _titleEditingController.text = widget.initTitle ?? '';
+    _textEditingController.text = widget.initText ?? '';
   }
 
   @override
@@ -48,7 +59,7 @@ class MdEditorState extends State<MdEditor> {
                     color: const Color(0xFF333333),
                   ),
               decoration: InputDecoration(
-                hintText: '标题',
+                hintText: widget.hintTitle ?? '标题',
                 border: InputBorder.none,
               ),
             ),
@@ -71,7 +82,7 @@ class MdEditorState extends State<MdEditor> {
                 }
               },
               decoration: InputDecoration(
-                hintText: '请输入内容',
+                hintText: widget.hintText ?? '请输入内容',
                 border: InputBorder.none,
               ),
             ),
