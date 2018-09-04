@@ -1,6 +1,7 @@
 library markdown_editor;
 
 import 'package:flutter/material.dart';
+import 'package:markdown_editor/action.dart';
 import 'package:markdown_editor/editor.dart';
 import 'package:markdown_editor/preview.dart';
 
@@ -22,6 +23,7 @@ class MarkdownEditor extends StatefulWidget {
     this.hintTitle,
     this.hintText,
     this.onTapLink,
+    this.imageSelect,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -32,6 +34,9 @@ class MarkdownEditor extends StatefulWidget {
 
   /// see [MdPreview.onTapLink]
   final TapLinkCallback onTapLink;
+
+  /// see [ImageSelectCallback]
+  final ImageSelectCallback imageSelect;
 
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
@@ -86,6 +91,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             initTitle: widget.initTitle,
             hintText: widget.hintText,
             hintTitle: widget.hintTitle,
+            imageSelect: widget.imageSelect,
           ),
         ),
         SafeArea(

@@ -10,6 +10,7 @@ class MdEditor extends StatefulWidget {
     this.initText,
     this.hintTitle,
     this.hintText,
+    this.imageSelect,
   }) : super(key: key);
 
   final TextStyle titleStyle;
@@ -18,6 +19,9 @@ class MdEditor extends StatefulWidget {
   final String initText;
   final String hintTitle;
   final String hintText;
+
+  /// see [ImageSelectCallback]
+  final ImageSelectCallback imageSelect;
 
   @override
   State<StatefulWidget> createState() => MdEditorState();
@@ -45,9 +49,18 @@ class MdEditorState extends State<MdEditor> {
   }
 
   void _disposeText(String text, int index) {
-    _textEditingController.text += text;
-    _textEditingController.selection = TextSelection.collapsed(
-        offset: _textEditingController.text.length - index);
+    if(_textEditingController.selection.start <0) return;
+
+    var startText = _textEditingController.text
+        .substring(0, _textEditingController.selection.start);
+    var endText = _textEditingController.text
+        .substring(_textEditingController.selection.start);
+
+    var str = startText + text + endText;
+    _textEditingController.value = TextEditingValue(
+        text: str,
+        selection: TextSelection.collapsed(
+            offset: startText.length + text.length - index));
   }
 
   @override
@@ -122,6 +135,7 @@ class MdEditorState extends State<MdEditor> {
                       ActionImage(
                         type: ActionType.image,
                         tap: _disposeText,
+                        imageSelect: widget.imageSelect,
                       ),
                       ActionImage(
                         type: ActionType.link,
@@ -137,10 +151,6 @@ class MdEditorState extends State<MdEditor> {
                       ),
                       ActionImage(
                         type: ActionType.textQuote,
-                        tap: _disposeText,
-                      ),
-                      ActionImage(
-                        type: ActionType.link,
                         tap: _disposeText,
                       ),
                       ActionImage(

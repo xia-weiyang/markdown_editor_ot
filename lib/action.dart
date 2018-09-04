@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 ///  Action image button of markdown editor.
@@ -6,10 +8,12 @@ class ActionImage extends StatefulWidget {
     Key key,
     this.type,
     this.tap,
+    this.imageSelect,
   }) : super(key: key);
 
   final ActionType type;
   final TapFinishCallback tap;
+  final ImageSelectCallback imageSelect;
 
   @override
   ActionImageState createState() => ActionImageState();
@@ -26,6 +30,17 @@ class ActionImageState extends State<ActionImage> {
     var firstWhere =
         _defaultImageAttributes.firstWhere((img) => img.type == widget.type);
     if (widget.tap != null && firstWhere != null) {
+      if (firstWhere.type == ActionType.image) {
+        if (widget.imageSelect != null) {
+          widget.imageSelect().then(
+            (str) {
+              if (str != null && str.isNotEmpty) widget.tap('![]($str)', 0);
+            },
+            onError: print,
+          );
+          return;
+        }
+      }
       widget.tap(firstWhere.text, firstWhere.positionReverse);
     }
   }
@@ -169,3 +184,7 @@ class ImageAttributes {
 /// [text] Adding text.
 /// [position] Cursor position that reverse order.
 typedef TapFinishCallback(String text, int positionReverse);
+
+/// Call this method after clicking the ImageAction.
+/// return your select image path.
+typedef Future<String> ImageSelectCallback();
