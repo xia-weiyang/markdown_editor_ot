@@ -34,7 +34,16 @@ class ActionImageState extends State<ActionImage> {
         if (widget.imageSelect != null) {
           widget.imageSelect().then(
             (str) {
-              if (str != null && str.isNotEmpty) widget.tap('![]($str)', 0);
+              print('Image select $str');
+              if (str != null && str.isNotEmpty) {
+                // 延迟执行它，现在不确定为什么没有执行成功
+                // 它不是没有被执行，而是在[tap]方法中无法获取光标位置
+                // 我怀疑跟界面切换有关，可能在选择图片后，[TextField]还未立即获得焦点。
+                // 当然，这只是零时解决方案。
+                Timer(const Duration(milliseconds: 1000), () {
+                  widget.tap('![]($str)', 0);
+                });
+              }
             },
             onError: print,
           );

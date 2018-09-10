@@ -49,12 +49,14 @@ class MdEditorState extends State<MdEditor> {
   }
 
   void _disposeText(String text, int index) {
-    if(_textEditingController.selection.start <0) return;
-
+    if (_textEditingController.selection.base.offset < 0) {
+      print('WRAN: The value is ${_textEditingController.selection.base.offset}');
+      return;
+    }
     var startText = _textEditingController.text
-        .substring(0, _textEditingController.selection.start);
+        .substring(0, _textEditingController.selection.base.offset);
     var endText = _textEditingController.text
-        .substring(_textEditingController.selection.start);
+        .substring(_textEditingController.selection.base.offset);
 
     var str = startText + text + endText;
     _textEditingController.value = TextEditingValue(
@@ -96,6 +98,7 @@ class MdEditorState extends State<MdEditor> {
                   TextField(
                     maxLines: _maxLines,
                     controller: _textEditingController,
+                    autofocus: true,
                     onChanged: (text) {
                       if (_maxLines != null &&
                           text != null &&
