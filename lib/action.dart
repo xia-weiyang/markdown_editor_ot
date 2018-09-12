@@ -197,3 +197,4 @@ typedef TapFinishCallback(String text, int positionReverse);
 /// Call this method after clicking the ImageAction.
 /// return your select image path.
 typedef Future<String> ImageSelectCallback();
+

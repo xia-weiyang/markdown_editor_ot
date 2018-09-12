@@ -24,6 +24,7 @@ class MarkdownEditor extends StatefulWidget {
     this.hintText,
     this.onTapLink,
     this.imageSelect,
+    this.tabChange,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -37,6 +38,9 @@ class MarkdownEditor extends StatefulWidget {
 
   /// see [ImageSelectCallback]
   final ImageSelectCallback imageSelect;
+
+  /// When page change to [PageType.preview] or [PageType.editor]
+  final TabChange tabChange;
 
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
@@ -68,6 +72,11 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
         setState(() {
           _previewText = _editorKey.currentState.getText();
         });
+      }
+      if (widget.tabChange != null) {
+        widget.tabChange(_controller.index == PageType.editor.index
+            ? PageType.editor
+            : PageType.preview);
       }
     });
   }
@@ -105,3 +114,5 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
     );
   }
 }
+
+typedef void TabChange(PageType type);
