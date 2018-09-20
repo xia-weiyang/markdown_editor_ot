@@ -119,65 +119,63 @@ class MdEditorState extends State<MdEditor> {
           ),
         ),
         Align(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
+          alignment: Alignment.bottomLeft,
+          child: Container(
+            height: 50.0,
             width: MediaQuery.of(context).size.width,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                height: 50.0,
-                child: Ink(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF0F0F0),
-                    boxShadow: [
-                      BoxShadow(color: const Color(0xAAF0F0F0)),
-                    ],
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      ActionImage(
-                        type: ActionType.image,
-                        tap: _disposeText,
-                        imageSelect: widget.imageSelect,
-                      ),
-                      ActionImage(
-                        type: ActionType.link,
-                        tap: _disposeText,
-                      ),
-                      ActionImage(
-                        type: ActionType.fontBold,
-                        tap: _disposeText,
-                      ),
-                      ActionImage(
-                        type: ActionType.fontItalic,
-                        tap: _disposeText,
-                      ),
-                      ActionImage(
-                        type: ActionType.textQuote,
-                        tap: _disposeText,
-                      ),
-                      ActionImage(
-                        type: ActionType.h4,
-                        tap: _disposeText,
-                      ),
-                      ActionImage(
-                        type: ActionType.h5,
-                        tap: _disposeText,
-                      ),
-                      ActionImage(
-                        type: ActionType.h1,
-                        tap: _disposeText,
-                      ),
-                      ActionImage(
-                        type: ActionType.h2,
-                        tap: _disposeText,
-                      ),
-                      ActionImage(
-                        type: ActionType.h3,
-                        tap: _disposeText,
-                      ),
-                    ],
-                  ),
+            child: Ink(
+              decoration: BoxDecoration(
+                color: const Color(0xFFF0F0F0),
+                boxShadow: [
+                  BoxShadow(color: const Color(0xAAF0F0F0)),
+                ],
+              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: <Widget>[
+                    ActionImage(
+                      type: ActionType.image,
+                      tap: _disposeText,
+                      imageSelect: widget.imageSelect,
+                    ),
+                    ActionImage(
+                      type: ActionType.link,
+                      tap: _disposeText,
+                    ),
+                    ActionImage(
+                      type: ActionType.fontBold,
+                      tap: _disposeText,
+                    ),
+                    ActionImage(
+                      type: ActionType.fontItalic,
+                      tap: _disposeText,
+                    ),
+                    ActionImage(
+                      type: ActionType.textQuote,
+                      tap: _disposeText,
+                    ),
+                    ActionImage(
+                      type: ActionType.h4,
+                      tap: _disposeText,
+                    ),
+                    ActionImage(
+                      type: ActionType.h5,
+                      tap: _disposeText,
+                    ),
+                    ActionImage(
+                      type: ActionType.h1,
+                      tap: _disposeText,
+                    ),
+                    ActionImage(
+                      type: ActionType.h2,
+                      tap: _disposeText,
+                    ),
+                    ActionImage(
+                      type: ActionType.h3,
+                      tap: _disposeText,
+                    ),
+                  ],
                 ),
               ),
             ),
