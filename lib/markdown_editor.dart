@@ -25,6 +25,7 @@ class MarkdownEditor extends StatefulWidget {
     this.onTapLink,
     this.imageSelect,
     this.tabChange,
+    this.textChange,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -41,6 +42,9 @@ class MarkdownEditor extends StatefulWidget {
 
   /// When page change to [PageType.preview] or [PageType.editor]
   final TabChange tabChange;
+
+  /// When title or text changed
+  final VoidCallback textChange;
 
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
@@ -101,6 +105,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             hintText: widget.hintText,
             hintTitle: widget.hintTitle,
             imageSelect: widget.imageSelect,
+            textChange: widget.textChange,
           ),
         ),
         SafeArea(

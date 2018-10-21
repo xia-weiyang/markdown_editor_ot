@@ -11,6 +11,7 @@ class MdEditor extends StatefulWidget {
     this.hintTitle,
     this.hintText,
     this.imageSelect,
+    this.textChange,
   }) : super(key: key);
 
   final TextStyle titleStyle;
@@ -22,6 +23,8 @@ class MdEditor extends StatefulWidget {
 
   /// see [ImageSelectCallback]
   final ImageSelectCallback imageSelect;
+
+  final VoidCallback textChange;
 
   @override
   State<StatefulWidget> createState() => MdEditorState();
@@ -50,7 +53,8 @@ class MdEditorState extends State<MdEditor> {
 
   void _disposeText(String text, int index) {
     if (_textEditingController.selection.base.offset < 0) {
-      print('WRAN: The value is ${_textEditingController.selection.base.offset}');
+      print(
+          'WRAN: The value is ${_textEditingController.selection.base.offset}');
       return;
     }
     var startText = _textEditingController.text
@@ -79,6 +83,10 @@ class MdEditorState extends State<MdEditor> {
                   TextField(
                     maxLines: 1,
                     controller: _titleEditingController,
+                    onChanged: (text) {
+                      if (widget.textChange != null)
+                        widget.textChange();
+                    },
                     style: widget.titleStyle ??
                         TextStyle(
                           fontSize: 20.0,
@@ -100,6 +108,7 @@ class MdEditorState extends State<MdEditor> {
                     controller: _textEditingController,
                     autofocus: true,
                     onChanged: (text) {
+                      // todo
                       if (_maxLines != null &&
                           text != null &&
                           text.length > _maxLines) {
@@ -107,6 +116,9 @@ class MdEditorState extends State<MdEditor> {
                           _maxLines = null;
                         });
                       }
+
+                      if (widget.textChange != null)
+                        widget.textChange();
                     },
                     decoration: InputDecoration(
                       hintText: widget.hintText ?? '请输入内容',
@@ -122,7 +134,10 @@ class MdEditorState extends State<MdEditor> {
           alignment: Alignment.bottomLeft,
           child: Container(
             height: 50.0,
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             child: Ink(
               decoration: BoxDecoration(
                 color: const Color(0xFFF0F0F0),
