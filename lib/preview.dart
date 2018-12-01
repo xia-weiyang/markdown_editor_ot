@@ -41,6 +41,8 @@ class MdPreviewState extends State<MdPreview> {
             print(href);
             if (widget.onTapLink == null) {
               _launchURL(href);
+            }else {
+              widget.onTapLink(href);
             }
           },
         ),
