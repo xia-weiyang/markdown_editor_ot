@@ -28,7 +28,7 @@ class EditPerform {
 
   /// 撤销
   void undo() {
-    print(_undoList);
+//    print(_undoList);
     if (_undoList.isNotEmpty) {
       _redoList.add(_undoList.last);
       _undoList.removeLast();
@@ -45,7 +45,7 @@ class EditPerform {
 
   /// 恢复
   void redo() {
-    print(_redoList);
+//    print(_redoList);
     if (_redoList.isNotEmpty) {
       _textEditingController.text = _redoList.last.text;
       _undoList.add(_redoList.last);
