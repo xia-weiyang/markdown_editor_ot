@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:markdown_editor/action.dart';
+import 'package:markdown_editor/edit_perform.dart';
 
 class MdEditor extends StatefulWidget {
   MdEditor({
@@ -33,6 +34,7 @@ class MdEditor extends StatefulWidget {
 class MdEditorState extends State<MdEditor> {
   final _titleEditingController = TextEditingController(text: '');
   final _textEditingController = TextEditingController(text: '');
+  var _editPerform;
   var _maxLines = 7;
 
   String getTitle() {
@@ -49,6 +51,8 @@ class MdEditorState extends State<MdEditor> {
     if (widget.initText != null && widget.initText.isNotEmpty) _maxLines = null;
     _titleEditingController.text = widget.initTitle ?? '';
     _textEditingController.text = widget.initText ?? '';
+
+    _editPerform = EditPerform(_textEditingController);
   }
 
   void _disposeText(String text, int index) {
@@ -84,8 +88,7 @@ class MdEditorState extends State<MdEditor> {
                     maxLines: 1,
                     controller: _titleEditingController,
                     onChanged: (text) {
-                      if (widget.textChange != null)
-                        widget.textChange();
+                      if (widget.textChange != null) widget.textChange();
                     },
                     style: widget.titleStyle ??
                         TextStyle(
@@ -108,7 +111,7 @@ class MdEditorState extends State<MdEditor> {
                     controller: _textEditingController,
                     autofocus: true,
                     onChanged: (text) {
-                      // todo
+                      _editPerform.change(text);
                       if (_maxLines != null &&
                           text != null &&
                           text.length > _maxLines) {
@@ -117,8 +120,7 @@ class MdEditorState extends State<MdEditor> {
                         });
                       }
 
-                      if (widget.textChange != null)
-                        widget.textChange();
+                      if (widget.textChange != null) widget.textChange();
                     },
                     decoration: InputDecoration(
                       hintText: widget.hintText ?? '请输入内容',
@@ -134,10 +136,7 @@ class MdEditorState extends State<MdEditor> {
           alignment: Alignment.bottomLeft,
           child: Container(
             height: 50.0,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             child: Ink(
               decoration: BoxDecoration(
                 color: const Color(0xFFF0F0F0),
@@ -149,6 +148,18 @@ class MdEditorState extends State<MdEditor> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: <Widget>[
+                    ActionImage(
+                      type: ActionType.undo,
+                      tap: (s, i) {
+                        _editPerform.undo();
+                      },
+                    ),
+                    ActionImage(
+                      type: ActionType.redo,
+                      tap: (s,i){
+                        _editPerform.redo();
+                      },
+                    ),
                     ActionImage(
                       type: ActionType.image,
                       tap: _disposeText,

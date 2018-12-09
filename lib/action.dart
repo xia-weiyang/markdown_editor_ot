@@ -72,6 +72,16 @@ class ActionImageState extends State<ActionImage> {
 
 const _defaultImageAttributes = <ImageAttributes>[
   ImageAttributes(
+    type: ActionType.undo,
+    path: 'images/undo_img.png',
+    tip: '撤销',
+  ),
+  ImageAttributes(
+    type: ActionType.redo,
+    path: 'images/redo_img.png',
+    tip: '恢复',
+  ),
+  ImageAttributes(
     type: ActionType.image,
     path: 'images/edit_img.png',
     text: '![]()',
@@ -158,6 +168,8 @@ const _defaultImageAttributes = <ImageAttributes>[
 ];
 
 enum ActionType {
+  undo,
+  redo,
   image,
   link,
   fontBold,

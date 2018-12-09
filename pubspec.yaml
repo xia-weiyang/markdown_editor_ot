@@ -21,6 +21,8 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
+    - packages/markdown_editor/images/undo_img.png
+    - packages/markdown_editor/images/redo_img.png
     - packages/markdown_editor/images/edit_img.png
     - packages/markdown_editor/images/link_img.png
     - packages/markdown_editor/images/format_bold_img.png
