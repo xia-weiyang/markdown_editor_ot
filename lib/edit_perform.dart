@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 
 /// 撤销与前进
 class EditPerform {
-  EditPerform(this._textEditingController)
+  EditPerform(this._textEditingController, {this.initText = '',})
       : assert(_textEditingController != null);
 
   /// 最大的存储长度
   final _maxLength = 50;
+
+  /// 初始文本
+  final String initText;
 
   var _undoList = <_EditData>[];
   var _redoList = <_EditData>[];
@@ -33,12 +36,19 @@ class EditPerform {
       _redoList.add(_undoList.last);
       _undoList.removeLast();
       if (_undoList.isNotEmpty) {
-        _textEditingController.text = _undoList.last.text;
-        _textEditingController.selection = TextSelection(
-            extentOffset: _undoList.last.position,
-            baseOffset: _undoList.last.position);
+        _textEditingController.value = TextEditingValue(
+          text: _undoList.last.text,
+          selection: TextSelection(
+              extentOffset: _undoList.last.position,
+              baseOffset: _undoList.last.position),
+        );
       } else {
-        _textEditingController.text = '';
+        _textEditingController.value = TextEditingValue(
+          text: initText,
+          selection: TextSelection(
+              extentOffset: initText.length,
+              baseOffset: initText.length),
+        );
       }
     }
   }
@@ -47,12 +57,14 @@ class EditPerform {
   void redo() {
 //    print(_redoList);
     if (_redoList.isNotEmpty) {
-      _textEditingController.text = _redoList.last.text;
+      _textEditingController.value = TextEditingValue(
+        text: _redoList.last.text,
+        selection: TextSelection(
+            extentOffset: _redoList.last.position,
+            baseOffset: _redoList.last.position),
+      );
       _undoList.add(_redoList.last);
       _redoList.removeLast();
-      _textEditingController.selection = TextSelection(
-          extentOffset: _undoList.last.position,
-          baseOffset: _undoList.last.position);
     }
   }
 }
