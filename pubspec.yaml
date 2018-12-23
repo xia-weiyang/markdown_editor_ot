@@ -8,11 +8,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_markdown: ^0.2.0
   url_launcher: ^3.0.3
-  markdown: ^2.0.2
-  flutter_html:
-    git:
-      url: https://github.com/otjiushig/flutter_html.git
 
 dev_dependencies:
   flutter_test:
