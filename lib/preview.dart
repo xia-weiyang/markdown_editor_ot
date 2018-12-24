@@ -37,6 +37,17 @@ class MdPreviewState extends State<MdPreview> {
         padding: widget.padding,
         child: MarkdownBody(
           data: widget.text ?? '',
+          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+              blockquoteDecoration: new BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    color: Colors.grey.shade300,
+                    width: 5,
+                  ),
+                ),
+              ),
+              blockquotePadding: 15,
+          ),
           onTapLink: (href) {
             print(href);
             if (widget.onTapLink == null) {
