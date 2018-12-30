@@ -8,10 +8,14 @@ class MdPreview extends StatefulWidget {
     this.text,
     this.padding = const EdgeInsets.all(0.0),
     this.onTapLink,
+    this.basicStyle,
   }) : super(key: key);
 
   final String text;
   final EdgeInsetsGeometry padding;
+
+  /// Custom to p, a and others basic style.
+  final TextStyle basicStyle;
 
   /// Call this method when it tap link of markdown.
   /// If [onTapLink] is null,it will open the link with your default browser.
@@ -32,27 +36,33 @@ class MdPreviewState extends State<MdPreview> {
 
   @override
   Widget build(BuildContext context) {
+    var style = widget.basicStyle ?? Theme.of(context).textTheme.body1;
+
     return SingleChildScrollView(
       child: Padding(
         padding: widget.padding,
         child: MarkdownBody(
           data: widget.text ?? '',
           styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-              blockquoteDecoration: new BoxDecoration(
-                border: Border(
-                  left: BorderSide(
-                    color: Colors.grey.shade300,
-                    width: 5,
-                  ),
+            a: style.copyWith(color: Colors.blue),
+            p: style,
+            img: style,
+            blockquote: style,
+            blockquoteDecoration: new BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  color: Colors.grey.shade300,
+                  width: 5,
                 ),
               ),
-              blockquotePadding: 15,
+            ),
+            blockquotePadding: 15,
           ),
           onTapLink: (href) {
             print(href);
             if (widget.onTapLink == null) {
               _launchURL(href);
-            }else {
+            } else {
               widget.onTapLink(href);
             }
           },
