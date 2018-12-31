@@ -53,7 +53,9 @@ class MdEditorState extends State<MdEditor> {
     _textEditingController.text = widget.initText ?? '';
 
     _editPerform = EditPerform(
-      _textEditingController, initText: _textEditingController.text,);
+      _textEditingController,
+      initText: _textEditingController.text,
+    );
   }
 
   void _disposeText(String text, int index) {
@@ -137,13 +139,12 @@ class MdEditorState extends State<MdEditor> {
           alignment: Alignment.bottomLeft,
           child: Container(
             height: 50.0,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             child: Ink(
               decoration: BoxDecoration(
-                color: const Color(0xFFF0F0F0),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.black54
+                    : Color(0xFFF0F0F0),
                 boxShadow: [
                   BoxShadow(color: const Color(0xAAF0F0F0)),
                 ],
