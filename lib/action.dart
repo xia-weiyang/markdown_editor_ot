@@ -20,10 +20,10 @@ class ActionImage extends StatefulWidget {
 }
 
 class ActionImageState extends State<ActionImage> {
-  String _getImagePath() {
+  int _getImageIconCode() {
     return _defaultImageAttributes
         .firstWhere((img) => img.type == widget.type)
-        ?.path;
+        ?.iconCode;
   }
 
   void _disposeAction() {
@@ -57,10 +57,13 @@ class ActionImageState extends State<ActionImage> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Image(
-        width: 30.0,
-        height: 30.0,
-        image: AssetImage(_getImagePath(), package: 'markdown_editor'),
+      icon: Icon(
+        IconData(
+          _getImageIconCode(),
+          fontFamily: 'MyIconFont',
+          fontPackage: 'markdown_editor',
+        ),
+        color: Colors.grey,
       ),
       tooltip: _defaultImageAttributes
           .firstWhere((img) => img.type == widget.type)
@@ -73,94 +76,87 @@ class ActionImageState extends State<ActionImage> {
 const _defaultImageAttributes = <ImageAttributes>[
   ImageAttributes(
     type: ActionType.undo,
-    path: 'images/undo_img.png',
+    iconCode: 0xe907,
     tip: '撤销',
   ),
   ImageAttributes(
     type: ActionType.redo,
-    path: 'images/redo_img.png',
+    iconCode: 0xe874,
     tip: '恢复',
   ),
   ImageAttributes(
     type: ActionType.image,
-    path: 'images/edit_img.png',
+    iconCode: 0xe7ac,
     text: '![]()',
     tip: '图片',
     positionReverse: 3,
   ),
   ImageAttributes(
     type: ActionType.link,
-    path: 'images/link_img.png',
+    iconCode: 0xe7d8,
     text: '[]()',
     tip: '链接',
     positionReverse: 3,
   ),
   ImageAttributes(
     type: ActionType.fontBold,
-    path: 'images/format_bold_img.png',
+    iconCode: 0xe757,
     text: '****',
     tip: '加粗',
     positionReverse: 2,
   ),
   ImageAttributes(
     type: ActionType.fontItalic,
-    path: 'images/format_italic_img.png',
+    iconCode: 0xe762,
     text: '**',
     tip: '斜体',
     positionReverse: 1,
   ),
-//  ImageAttributes(
-//    type: ActionType.fontDeleteLine,
-//    path: 'images/strikethrough_img.png',
-//    text: '~~~~',
-//    tip: '删除线',
-//    positionReverse: 2,
-//  ),
   ImageAttributes(
     type: ActionType.textQuote,
-    path: 'images/format_quote_img.png',
+    iconCode: 0xe768,
     text: '\n>',
     tip: '文字引用',
     positionReverse: 0,
   ),
   ImageAttributes(
     type: ActionType.list,
-    path: 'images/list_img.png',
+    iconCode: 0xe764,
     text: '\n- ',
     tip: '无序列表',
     positionReverse: 0,
   ),
   ImageAttributes(
     type: ActionType.h4,
-    path: 'images/format_header_4_img.png',
+    iconCode: 0xe75e,
     text: '\n#### ',
     tip: '四级标题',
     positionReverse: 0,
   ),
   ImageAttributes(
     type: ActionType.h5,
-    path: 'images/format_header_5_img.png',
+    iconCode: 0xe75f,
     text: '\n##### ',
     tip: '五级标题',
     positionReverse: 0,
   ),
   ImageAttributes(
     type: ActionType.h1,
-    path: 'images/format_header_1_img.png',
+    iconCode: 0xe75b,
     text: '\n# ',
     tip: '一级标题',
     positionReverse: 0,
   ),
   ImageAttributes(
     type: ActionType.h2,
-    path: 'images/format_header_2_img.png',
+    iconCode: 0xe75c,
     text: '\n## ',
     tip: '二级标题',
     positionReverse: 0,
   ),
   ImageAttributes(
     type: ActionType.h3,
-    path: 'images/format_header_3_img.png',
+    iconCode: 0xe75e,
     text: '\n### ',
     tip: '三级标题',
     positionReverse: 0,
@@ -190,12 +186,12 @@ class ImageAttributes {
     this.text,
     this.positionReverse,
     @required this.type,
-    @required this.path,
-  })  : assert(path != null),
+    @required this.iconCode,
+  })  : assert(iconCode != null),
         assert(type != null);
 
   final ActionType type;
-  final String path;
+  final int iconCode;
   final String tip;
   final String text;
   final int positionReverse;
@@ -209,4 +205,3 @@ typedef TapFinishCallback(String text, int positionReverse);
 /// Call this method after clicking the ImageAction.
 /// return your select image path.
 typedef Future<String> ImageSelectCallback();
-
