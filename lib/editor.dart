@@ -13,6 +13,7 @@ class MdEditor extends StatefulWidget {
     this.hintText,
     this.imageSelect,
     this.textChange,
+    this.actionIconColor,
   }) : super(key: key);
 
   final TextStyle titleStyle;
@@ -26,6 +27,9 @@ class MdEditor extends StatefulWidget {
   final ImageSelectCallback imageSelect;
 
   final VoidCallback textChange;
+
+  /// Change icon color, eg: color of font_bold icon.
+  final Color actionIconColor;
 
   @override
   State<StatefulWidget> createState() => MdEditorState();
@@ -155,55 +159,67 @@ class MdEditorState extends State<MdEditor> {
                   children: <Widget>[
                     ActionImage(
                       type: ActionType.undo,
+                      color: widget.actionIconColor,
                       tap: (s, i) {
                         _editPerform.undo();
                       },
                     ),
                     ActionImage(
                       type: ActionType.redo,
+                      color: widget.actionIconColor,
                       tap: (s, i) {
                         _editPerform.redo();
                       },
                     ),
                     ActionImage(
                       type: ActionType.image,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                       imageSelect: widget.imageSelect,
                     ),
                     ActionImage(
                       type: ActionType.link,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                     ),
                     ActionImage(
                       type: ActionType.fontBold,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                     ),
                     ActionImage(
                       type: ActionType.fontItalic,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                     ),
                     ActionImage(
                       type: ActionType.textQuote,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                     ),
                     ActionImage(
                       type: ActionType.h4,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                     ),
                     ActionImage(
                       type: ActionType.h5,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                     ),
                     ActionImage(
                       type: ActionType.h1,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                     ),
                     ActionImage(
                       type: ActionType.h2,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                     ),
                     ActionImage(
                       type: ActionType.h3,
+                      color: widget.actionIconColor,
                       tap: _disposeText,
                     ),
                   ],

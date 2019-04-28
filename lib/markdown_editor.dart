@@ -26,6 +26,7 @@ class MarkdownEditor extends StatefulWidget {
     this.imageSelect,
     this.tabChange,
     this.textChange,
+    this.actionIconColor = Colors.grey,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -45,6 +46,9 @@ class MarkdownEditor extends StatefulWidget {
 
   /// When title or text changed
   final VoidCallback textChange;
+
+  /// Change icon color, eg: color of font_bold icon.
+  final Color actionIconColor;
 
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
@@ -106,6 +110,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             hintTitle: widget.hintTitle,
             imageSelect: widget.imageSelect,
             textChange: widget.textChange,
+            actionIconColor: widget.actionIconColor,
           ),
         ),
         SafeArea(

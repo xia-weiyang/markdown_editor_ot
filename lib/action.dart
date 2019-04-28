@@ -9,11 +9,15 @@ class ActionImage extends StatefulWidget {
     this.type,
     this.tap,
     this.imageSelect,
-  }) : super(key: key);
+    this.color,
+  })  : assert(color != null),
+        super(key: key);
 
   final ActionType type;
   final TapFinishCallback tap;
   final ImageSelectCallback imageSelect;
+
+  final Color color;
 
   @override
   ActionImageState createState() => ActionImageState();
@@ -56,19 +60,22 @@ class ActionImageState extends State<ActionImage> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        IconData(
-          _getImageIconCode(),
-          fontFamily: 'MyIconFont',
-          fontPackage: 'markdown_editor',
-        ),
-        color: Colors.grey,
-      ),
-      tooltip: _defaultImageAttributes
+    return Tooltip(
+      preferBelow: false,
+      message: _defaultImageAttributes
           .firstWhere((img) => img.type == widget.type)
           ?.tip,
-      onPressed: _disposeAction,
+      child: IconButton(
+        icon: Icon(
+          IconData(
+            _getImageIconCode(),
+            fontFamily: 'MyIconFont',
+            fontPackage: 'markdown_editor',
+          ),
+          color: widget.color,
+        ),
+        onPressed: _disposeAction,
+      ),
     );
   }
 }
