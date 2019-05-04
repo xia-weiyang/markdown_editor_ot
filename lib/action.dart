@@ -163,7 +163,7 @@ const _defaultImageAttributes = <ImageAttributes>[
   ),
   ImageAttributes(
     type: ActionType.h3,
-    iconCode: 0xe75e,
+    iconCode: 0xe75d,
     text: '\n### ',
     tip: '三级标题',
     positionReverse: 0,
