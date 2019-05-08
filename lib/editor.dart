@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:markdown_editor/action.dart';
+import 'package:markdown_editor/customize_physics.dart';
 import 'package:markdown_editor/edit_perform.dart';
 
 class MdEditor extends StatefulWidget {
@@ -39,7 +40,6 @@ class MdEditorState extends State<MdEditor> {
   final _titleEditingController = TextEditingController(text: '');
   final _textEditingController = TextEditingController(text: '');
   var _editPerform;
-  var _maxLines = 7;
 
   String getTitle() {
     return _titleEditingController.value.text;
@@ -52,7 +52,6 @@ class MdEditorState extends State<MdEditor> {
   @override
   void initState() {
     super.initState();
-    if (widget.initText != null && widget.initText.isNotEmpty) _maxLines = null;
     _titleEditingController.text = widget.initTitle ?? '';
     _textEditingController.text = widget.initText ?? '';
 
@@ -114,19 +113,17 @@ class MdEditorState extends State<MdEditor> {
                     ),
                   ),
                   TextField(
-                    maxLines: _maxLines,
+                    maxLines: null,
+                    minLines: 15,
                     controller: _textEditingController,
                     autofocus: true,
+                    scrollPhysics: const CustomizePhysics(),
+                    style: TextStyle(
+                      fontSize: 17,
+                      height: 1.1,
+                    ),
                     onChanged: (text) {
                       _editPerform.change(text);
-                      if (_maxLines != null &&
-                          text != null &&
-                          text.length > _maxLines) {
-                        setState(() {
-                          _maxLines = null;
-                        });
-                      }
-
                       if (widget.textChange != null) widget.textChange();
                     },
                     decoration: InputDecoration(
