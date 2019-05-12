@@ -115,6 +115,8 @@ class MdEditorState extends State<MdEditor> {
                   TextField(
                     maxLines: null,
                     minLines: 15,
+                    cursorColor: Theme.of(context).primaryColor,
+                    cursorWidth: 1,
                     controller: _textEditingController,
                     autofocus: true,
                     scrollPhysics: const CustomizePhysics(),
