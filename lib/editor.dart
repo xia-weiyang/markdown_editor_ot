@@ -92,6 +92,8 @@ class MdEditorState extends State<MdEditor> {
                 children: <Widget>[
                   TextField(
                     maxLines: 1,
+                    cursorColor: Theme.of(context).primaryColor,
+                    cursorWidth: 1.5,
                     controller: _titleEditingController,
                     onChanged: (text) {
                       if (widget.textChange != null) widget.textChange();
@@ -116,7 +118,7 @@ class MdEditorState extends State<MdEditor> {
                     maxLines: null,
                     minLines: 15,
                     cursorColor: Theme.of(context).primaryColor,
-                    cursorWidth: 1,
+                    cursorWidth: 1.5,
                     controller: _textEditingController,
                     autofocus: true,
                     scrollPhysics: const CustomizePhysics(),
