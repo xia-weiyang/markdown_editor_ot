@@ -15,6 +15,7 @@ class MdEditor extends StatefulWidget {
     this.imageSelect,
     this.textChange,
     this.actionIconColor,
+    this.cursorColor,
   }) : super(key: key);
 
   final TextStyle titleStyle;
@@ -31,6 +32,8 @@ class MdEditor extends StatefulWidget {
 
   /// Change icon color, eg: color of font_bold icon.
   final Color actionIconColor;
+
+  final Color cursorColor;
 
   @override
   State<StatefulWidget> createState() => MdEditorState();
@@ -92,7 +95,7 @@ class MdEditorState extends State<MdEditor> {
                 children: <Widget>[
                   TextField(
                     maxLines: 1,
-                    cursorColor: Theme.of(context).primaryColor,
+                    cursorColor: widget.cursorColor,
                     cursorWidth: 1.5,
                     controller: _titleEditingController,
                     onChanged: (text) {
@@ -117,7 +120,7 @@ class MdEditorState extends State<MdEditor> {
                   TextField(
                     maxLines: null,
                     minLines: 15,
-                    cursorColor: Theme.of(context).primaryColor,
+                    cursorColor: widget.cursorColor,
                     cursorWidth: 1.5,
                     controller: _textEditingController,
                     autofocus: true,
