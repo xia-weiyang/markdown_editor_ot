@@ -10,12 +10,14 @@ class ActionImage extends StatefulWidget {
     this.tap,
     this.imageSelect,
     this.color,
+    this.getCursorPosition,
   })  : assert(color != null),
         super(key: key);
 
   final ActionType type;
   final TapFinishCallback tap;
   final ImageSelectCallback imageSelect;
+  final GetCursorPosition getCursorPosition;
 
   final Color color;
 
@@ -35,17 +37,16 @@ class ActionImageState extends State<ActionImage> {
         _defaultImageAttributes.firstWhere((img) => img.type == widget.type);
     if (widget.tap != null && firstWhere != null) {
       if (firstWhere.type == ActionType.image) {
+        var cursorPosition = widget?.getCursorPosition();
         if (widget.imageSelect != null) {
           widget.imageSelect().then(
             (str) {
-              print('Image select $str');
+              debugPrint('Image select $str');
               if (str != null && str.isNotEmpty) {
-                // 延迟执行它，现在不确定为什么没有执行成功
-                // 它不是没有被执行，而是在[tap]方法中无法获取光标位置
-                // 我怀疑跟界面切换有关，可能在选择图片后，[TextField]还未立即获得焦点。
-                // 当然，这只是零时解决方案。
+                // 延迟执行它，等待TextFiled获取焦点
+                // 否则将无法成功插入文本
                 Timer(const Duration(milliseconds: 1000), () {
-                  widget.tap('![]($str)', 0);
+                  widget.tap('![]($str)', 0, cursorPosition);
                 });
               }
             },
@@ -207,8 +208,16 @@ class ImageAttributes {
 /// Call this method after clicking the [ActionImage] and completing a series of actions.
 /// [text] Adding text.
 /// [position] Cursor position that reverse order.
-typedef TapFinishCallback(String text, int positionReverse);
+/// [cursorPosition] Will start insert text at this position.
+typedef void TapFinishCallback(
+  String text,
+  int positionReverse, [
+  int cursorPosition,
+]);
 
 /// Call this method after clicking the ImageAction.
 /// return your select image path.
 typedef Future<String> ImageSelectCallback();
+
+/// Get the current cursor position.
+typedef int GetCursorPosition();

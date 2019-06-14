@@ -64,22 +64,36 @@ class MdEditorState extends State<MdEditor> {
     );
   }
 
-  void _disposeText(String text, int index) {
+  void _disposeText(
+    String text,
+    int index, [
+    int cursorPosition,
+  ]) {
     if (_textEditingController.selection.base.offset < 0) {
       print(
           'WRAN: The value is ${_textEditingController.selection.base.offset}');
       return;
     }
-    var startText = _textEditingController.text
-        .substring(0, _textEditingController.selection.base.offset);
-    var endText = _textEditingController.text
-        .substring(_textEditingController.selection.base.offset);
+
+    var position =
+        cursorPosition ?? _textEditingController.selection.base.offset;
+
+    var startText = _textEditingController.text.substring(0, position);
+    var endText = _textEditingController.text.substring(position);
 
     var str = startText + text + endText;
     _textEditingController.value = TextEditingValue(
         text: str,
         selection: TextSelection.collapsed(
             offset: startText.length + text.length - index));
+  }
+
+  /// 获取光标位置
+  int _getCursorPosition() {
+    if (_textEditingController.text.isEmpty) return 0;
+    if (_textEditingController.selection.base.offset < 0)
+      return _textEditingController.text.length;
+    return _textEditingController.selection.base.offset;
   }
 
   @override
@@ -164,14 +178,14 @@ class MdEditorState extends State<MdEditor> {
                     ActionImage(
                       type: ActionType.undo,
                       color: widget.actionIconColor,
-                      tap: (s, i) {
+                      tap: (s, i, [p]) {
                         _editPerform.undo();
                       },
                     ),
                     ActionImage(
                       type: ActionType.redo,
                       color: widget.actionIconColor,
-                      tap: (s, i) {
+                      tap: (s, i, [p]) {
                         _editPerform.redo();
                       },
                     ),
@@ -180,6 +194,7 @@ class MdEditorState extends State<MdEditor> {
                       color: widget.actionIconColor,
                       tap: _disposeText,
                       imageSelect: widget.imageSelect,
+                      getCursorPosition: _getCursorPosition,
                     ),
                     ActionImage(
                       type: ActionType.link,
