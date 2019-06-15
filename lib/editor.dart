@@ -217,6 +217,11 @@ class MdEditorState extends State<MdEditor> {
                       tap: _disposeText,
                     ),
                     ActionImage(
+                      type: ActionType.list,
+                      color: widget.actionIconColor,
+                      tap: _disposeText,
+                    ),
+                    ActionImage(
                       type: ActionType.h4,
                       color: widget.actionIconColor,
                       tap: _disposeText,

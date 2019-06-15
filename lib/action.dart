@@ -122,13 +122,6 @@ const _defaultImageAttributes = <ImageAttributes>[
   ),
   ImageAttributes(
     type: ActionType.textQuote,
-    iconCode: 0xe764,
-    text: '\n- ',
-    tip: '列表',
-    positionReverse: 0,
-  ),
-  ImageAttributes(
-    type: ActionType.textQuote,
     iconCode: 0xe768,
     text: '\n>',
     tip: '文字引用',
