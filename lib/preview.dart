@@ -25,7 +25,7 @@ class MdPreview extends StatefulWidget {
   State<StatefulWidget> createState() => MdPreviewState();
 }
 
-class MdPreviewState extends State<MdPreview> {
+class MdPreviewState extends State<MdPreview> with AutomaticKeepAliveClientMixin {
   _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -70,6 +70,9 @@ class MdPreviewState extends State<MdPreview> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 typedef void TapLinkCallback(String link);
