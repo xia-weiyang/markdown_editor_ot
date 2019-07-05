@@ -86,6 +86,8 @@ class MdEditorState extends State<MdEditor> {
         text: str,
         selection: TextSelection.collapsed(
             offset: startText.length + text.length - index));
+
+    _editPerform.change(_textEditingController.text);
   }
 
   /// 获取光标位置
