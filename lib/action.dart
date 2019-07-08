@@ -46,7 +46,7 @@ class ActionImageState extends State<ActionImage> {
                 // 延迟执行它，等待TextFiled获取焦点
                 // 否则将无法成功插入文本
                 Timer(const Duration(milliseconds: 1000), () {
-                  widget.tap('![]($str)', 0, cursorPosition);
+                  widget.tap(widget.type, '![]($str)', 0, cursorPosition);
                 });
               }
             },
@@ -55,7 +55,7 @@ class ActionImageState extends State<ActionImage> {
           return;
         }
       }
-      widget.tap(firstWhere.text, firstWhere.positionReverse);
+      widget.tap(widget.type, firstWhere.text, firstWhere.positionReverse);
     }
   }
 
@@ -210,6 +210,7 @@ class ImageAttributes {
 /// [position] Cursor position that reverse order.
 /// [cursorPosition] Will start insert text at this position.
 typedef void TapFinishCallback(
+  ActionType type,
   String text,
   int positionReverse, [
   int cursorPosition,

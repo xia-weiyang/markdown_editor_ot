@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:markdown_editor/action.dart';
 import 'package:markdown_editor/customize_physics.dart';
 import 'package:markdown_editor/edit_perform.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MdEditor extends StatefulWidget {
   MdEditor({
@@ -43,6 +46,7 @@ class MdEditorState extends State<MdEditor> {
   final _titleEditingController = TextEditingController(text: '');
   final _textEditingController = TextEditingController(text: '');
   var _editPerform;
+  SharedPreferences _pres;
 
   String getTitle() {
     return _titleEditingController.value.text;
@@ -65,6 +69,7 @@ class MdEditorState extends State<MdEditor> {
   }
 
   void _disposeText(
+    ActionType type,
     String text,
     int index, [
     int cursorPosition,
@@ -74,6 +79,10 @@ class MdEditorState extends State<MdEditor> {
           'WRAN: The value is ${_textEditingController.selection.base.offset}');
       return;
     }
+
+    final _tempKey = 'markdown_editor_${type.toString()}';
+    _pres.setInt(_tempKey, (_pres.getInt(_tempKey) ?? 0) + 1);
+    debugPrint('$_tempKey   ${_pres.getInt(_tempKey)}');
 
     var position =
         cursorPosition ?? _textEditingController.selection.base.offset;
@@ -96,6 +105,10 @@ class MdEditorState extends State<MdEditor> {
     if (_textEditingController.selection.base.offset < 0)
       return _textEditingController.text.length;
     return _textEditingController.selection.base.offset;
+  }
+
+  Future<void> _initSharedPreferences() async {
+    _pres = await SharedPreferences.getInstance();
   }
 
   @override
@@ -173,83 +186,38 @@ class MdEditorState extends State<MdEditor> {
                   BoxShadow(color: const Color(0xAAF0F0F0)),
                 ],
               ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: <Widget>[
-                    ActionImage(
-                      type: ActionType.undo,
-                      color: widget.actionIconColor,
-                      tap: (s, i, [p]) {
-                        _editPerform.undo();
-                      },
+              child: FutureBuilder(
+                future: _initSharedPreferences(),
+                builder: (con, snap) {
+                  final widgets = <ActionImage>[];
+
+                  widgets.add(ActionImage(
+                    type: ActionType.undo,
+                    color: widget.actionIconColor,
+                    tap: (t, s, i, [p]) {
+                      _editPerform.undo();
+                    },
+                  ));
+                  widgets.add(ActionImage(
+                    type: ActionType.redo,
+                    color: widget.actionIconColor,
+                    tap: (t, s, i, [p]) {
+                      _editPerform.redo();
+                    },
+                  ));
+
+                  // sort
+                  if (snap.connectionState == ConnectionState.done)
+                    widgets.addAll(
+                        _getSortActionWidgets().map((sort) => sort.widget));
+
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: widgets,
                     ),
-                    ActionImage(
-                      type: ActionType.redo,
-                      color: widget.actionIconColor,
-                      tap: (s, i, [p]) {
-                        _editPerform.redo();
-                      },
-                    ),
-                    ActionImage(
-                      type: ActionType.image,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                      imageSelect: widget.imageSelect,
-                      getCursorPosition: _getCursorPosition,
-                    ),
-                    ActionImage(
-                      type: ActionType.link,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                    ActionImage(
-                      type: ActionType.fontBold,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                    ActionImage(
-                      type: ActionType.fontItalic,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                    ActionImage(
-                      type: ActionType.textQuote,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                    ActionImage(
-                      type: ActionType.list,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                    ActionImage(
-                      type: ActionType.h4,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                    ActionImage(
-                      type: ActionType.h5,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                    ActionImage(
-                      type: ActionType.h1,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                    ActionImage(
-                      type: ActionType.h2,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                    ActionImage(
-                      type: ActionType.h3,
-                      color: widget.actionIconColor,
-                      tap: _disposeText,
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ),
@@ -257,4 +225,114 @@ class MdEditorState extends State<MdEditor> {
       ],
     );
   }
+
+  /// Sort action buttons by used count.
+  List<_SortActionWidget> _getSortActionWidgets() {
+    final sortWidget = <_SortActionWidget>[];
+    final key = 'markdown_editor';
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.image.toString()}'),
+      widget: ActionImage(
+        type: ActionType.image,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+        imageSelect: widget.imageSelect,
+        getCursorPosition: _getCursorPosition,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.link.toString()}') ?? 9,
+      widget: ActionImage(
+        type: ActionType.link,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.fontBold.toString()}'),
+      widget: ActionImage(
+        type: ActionType.fontBold,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.fontItalic.toString()}'),
+      widget: ActionImage(
+        type: ActionType.fontItalic,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.textQuote.toString()}'),
+      widget: ActionImage(
+        type: ActionType.textQuote,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.list.toString()}'),
+      widget: ActionImage(
+        type: ActionType.list,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.h4.toString()}'),
+      widget: ActionImage(
+        type: ActionType.h4,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.h5.toString()}'),
+      widget: ActionImage(
+        type: ActionType.h5,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.h1.toString()}'),
+      widget: ActionImage(
+        type: ActionType.h1,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.h2.toString()}'),
+      widget: ActionImage(
+        type: ActionType.h2,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.h3.toString()}'),
+      widget: ActionImage(
+        type: ActionType.h3,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+
+    sortWidget.sort((a, b) => (b.sortValue ?? 0).compareTo(a.sortValue ?? 0));
+
+    return sortWidget;
+  }
+}
+
+class _SortActionWidget {
+  final ActionImage widget;
+  final int sortValue;
+
+  _SortActionWidget({
+    @required this.widget,
+    @required this.sortValue,
+  });
 }
