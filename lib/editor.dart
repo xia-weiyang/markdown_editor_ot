@@ -74,18 +74,17 @@ class MdEditorState extends State<MdEditor> {
     int index, [
     int cursorPosition,
   ]) {
-    if (_textEditingController.selection.base.offset < 0) {
-      print(
-          'WRAN: The value is ${_textEditingController.selection.base.offset}');
-      return;
-    }
-
     final _tempKey = 'markdown_editor_${type.toString()}';
     _pres.setInt(_tempKey, (_pres.getInt(_tempKey) ?? 0) + 1);
     debugPrint('$_tempKey   ${_pres.getInt(_tempKey)}');
 
     var position =
         cursorPosition ?? _textEditingController.selection.base.offset;
+
+    if (position < 0) {
+      print('WRAN: The insert position value is $position');
+      return;
+    }
 
     var startText = _textEditingController.text.substring(0, position);
     var endText = _textEditingController.text.substring(position);
