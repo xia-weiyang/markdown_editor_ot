@@ -42,7 +42,7 @@ class MdEditor extends StatefulWidget {
   State<StatefulWidget> createState() => MdEditorState();
 }
 
-class MdEditorState extends State<MdEditor> {
+class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
   final _titleEditingController = TextEditingController(text: '');
   final _textEditingController = TextEditingController(text: '');
   var _editPerform;
@@ -94,6 +94,8 @@ class MdEditorState extends State<MdEditor> {
         text: str,
         selection: TextSelection.collapsed(
             offset: startText.length + text.length - index));
+
+    if (widget.textChange != null) widget.textChange();
 
     _editPerform.change(_textEditingController.text);
   }
@@ -186,7 +188,7 @@ class MdEditorState extends State<MdEditor> {
                 ],
               ),
               child: FutureBuilder(
-                future: _initSharedPreferences(),
+                future: _pres == null ? _initSharedPreferences() : null,
                 builder: (con, snap) {
                   final widgets = <ActionImage>[];
 
@@ -206,7 +208,8 @@ class MdEditorState extends State<MdEditor> {
                   ));
 
                   // sort
-                  if (snap.connectionState == ConnectionState.done)
+                  if (snap.connectionState == ConnectionState.done ||
+                      snap.connectionState == ConnectionState.none)
                     widgets.addAll(
                         _getSortActionWidgets().map((sort) => sort.widget));
 
@@ -324,6 +327,9 @@ class MdEditorState extends State<MdEditor> {
 
     return sortWidget;
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _SortActionWidget {
