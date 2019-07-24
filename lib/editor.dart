@@ -117,7 +117,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 50.0),
+          padding: const EdgeInsets.only(bottom: 40.0),
           child: SingleChildScrollView(
             child: Padding(
               padding: widget.padding,
@@ -176,15 +176,18 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
-            height: 50.0,
+            height: 40.0,
             width: MediaQuery.of(context).size.width,
             child: Ink(
               decoration: BoxDecoration(
                 color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.black54
-                    : Color(0xFFF0F0F0),
+                    ? Colors.black87
+                    : const Color(0xFFF0F0F0),
                 boxShadow: [
-                  BoxShadow(color: const Color(0xAAF0F0F0)),
+                  BoxShadow(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.black87
+                          : const Color(0xAAF0F0F0)),
                 ],
               ),
               child: FutureBuilder(
