@@ -19,6 +19,7 @@ class MdEditor extends StatefulWidget {
     this.textChange,
     this.actionIconColor,
     this.cursorColor,
+    this.appendBottomWidget,
   }) : super(key: key);
 
   final TextStyle titleStyle;
@@ -37,6 +38,8 @@ class MdEditor extends StatefulWidget {
   final Color actionIconColor;
 
   final Color cursorColor;
+
+  final Widget appendBottomWidget;
 
   @override
   State<StatefulWidget> createState() => MdEditorState();
@@ -122,6 +125,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
             child: Padding(
               padding: widget.padding,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TextField(
                     maxLines: 1,
@@ -149,7 +153,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                   ),
                   TextField(
                     maxLines: null,
-                    minLines: 15,
+                    minLines: 7,
                     cursorColor: widget.cursorColor,
                     cursorWidth: 1.5,
                     controller: _textEditingController,
@@ -168,6 +172,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                       border: InputBorder.none,
                     ),
                   ),
+                  widget.appendBottomWidget ?? const SizedBox(),
                 ],
               ),
             ),
