@@ -29,6 +29,7 @@ class MarkdownEditor extends StatefulWidget {
     this.actionIconColor = Colors.grey,
     this.cursorColor,
     this.titleTextStyle,
+    this.textStyle,
     this.appendBottomWidget,
   }) : super(key: key);
 
@@ -56,6 +57,7 @@ class MarkdownEditor extends StatefulWidget {
   final Color cursorColor;
 
   final TextStyle titleTextStyle;
+  final TextStyle textStyle;
 
   final Widget appendBottomWidget;
 
@@ -118,6 +120,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             hintText: widget.hintText,
             hintTitle: widget.hintTitle,
             titleStyle: widget.titleTextStyle,
+            textStyle: widget.textStyle,
             imageSelect: widget.imageSelect,
             textChange: widget.textChange,
             actionIconColor: widget.actionIconColor,

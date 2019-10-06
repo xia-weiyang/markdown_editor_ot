@@ -10,6 +10,7 @@ class MdEditor extends StatefulWidget {
   MdEditor({
     Key key,
     this.titleStyle,
+    this.textStyle,
     this.padding = const EdgeInsets.all(0.0),
     this.initTitle,
     this.initText,
@@ -23,6 +24,7 @@ class MdEditor extends StatefulWidget {
   }) : super(key: key);
 
   final TextStyle titleStyle;
+  final TextStyle textStyle;
   final EdgeInsetsGeometry padding;
   final String initTitle;
   final String initText;
@@ -159,10 +161,11 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                     controller: _textEditingController,
                     autofocus: true,
                     scrollPhysics: const CustomizePhysics(),
-                    style: TextStyle(
-                      fontSize: 17,
-                      height: 1.1,
-                    ),
+                    style: widget.textStyle ??
+                        TextStyle(
+                          fontSize: 17,
+                          height: 1.3,
+                        ),
                     onChanged: (text) {
                       _editPerform.change(text);
                       if (widget.textChange != null) widget.textChange();
