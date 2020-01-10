@@ -119,6 +119,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Stack(
       children: [
         Padding(

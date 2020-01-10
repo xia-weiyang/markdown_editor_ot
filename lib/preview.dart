@@ -36,6 +36,7 @@ class MdPreviewState extends State<MdPreview> with AutomaticKeepAliveClientMixin
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var style = widget.basicStyle ?? Theme.of(context).textTheme.body1;
 
     return SingleChildScrollView(
