@@ -26,10 +26,10 @@ class ActionImage extends StatefulWidget {
 }
 
 class ActionImageState extends State<ActionImage> {
-  int _getImageIconCode() {
+  IconData _getImageIconCode() {
     return _defaultImageAttributes
         .firstWhere((img) => img.type == widget.type)
-        ?.iconCode;
+        ?.iconData;
   }
 
   void _disposeAction() {
@@ -68,11 +68,7 @@ class ActionImageState extends State<ActionImage> {
           ?.tip,
       child: IconButton(
         icon: Icon(
-          IconData(
-            _getImageIconCode(),
-            fontFamily: 'MyIconFont',
-            fontPackage: 'markdown_editor',
-          ),
+          _getImageIconCode(),
           color: widget.color,
         ),
         onPressed: _disposeAction,
@@ -84,90 +80,142 @@ class ActionImageState extends State<ActionImage> {
 const _defaultImageAttributes = <ImageAttributes>[
   ImageAttributes(
     type: ActionType.undo,
-    iconCode: 0xe907,
     tip: '撤销',
+    iconData: const IconData(
+      0xe907,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.redo,
-    iconCode: 0xe874,
     tip: '恢复',
+    iconData: const IconData(
+      0xe874,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.image,
-    iconCode: 0xe7ac,
     text: '![]()',
     tip: '图片',
     positionReverse: 3,
+    iconData: const IconData(
+      0xe7ac,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.link,
-    iconCode: 0xe7d8,
     text: '[]()',
     tip: '链接',
     positionReverse: 3,
+    iconData: const IconData(
+      0xe7d8,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.fontBold,
-    iconCode: 0xe757,
     text: '****',
     tip: '加粗',
     positionReverse: 2,
+    iconData: const IconData(
+      0xe757,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.fontItalic,
-    iconCode: 0xe762,
     text: '**',
     tip: '斜体',
     positionReverse: 1,
+    iconData: const IconData(
+      0xe762,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.textQuote,
-    iconCode: 0xe768,
     text: '\n>',
     tip: '文字引用',
     positionReverse: 0,
+    iconData: const IconData(
+      0xe768,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.list,
-    iconCode: 0xe764,
     text: '\n- ',
     tip: '无序列表',
     positionReverse: 0,
+    iconData: const IconData(
+      0xe764,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.h4,
-    iconCode: 0xe75e,
     text: '\n#### ',
     tip: '四级标题',
     positionReverse: 0,
+    iconData: const IconData(
+      0xe75e,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.h5,
-    iconCode: 0xe75f,
     text: '\n##### ',
     tip: '五级标题',
     positionReverse: 0,
+    iconData: const IconData(
+      0xe75f,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.h1,
-    iconCode: 0xe75b,
     text: '\n# ',
     tip: '一级标题',
     positionReverse: 0,
+    iconData: const IconData(
+      0xe75b,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.h2,
-    iconCode: 0xe75c,
     text: '\n## ',
     tip: '二级标题',
     positionReverse: 0,
+    iconData: const IconData(
+      0xe75c,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
   ImageAttributes(
     type: ActionType.h3,
-    iconCode: 0xe75d,
     text: '\n### ',
     tip: '三级标题',
     positionReverse: 0,
+    iconData: const IconData(
+      0xe75d,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
   ),
 ];
 
@@ -194,12 +242,12 @@ class ImageAttributes {
     this.text,
     this.positionReverse,
     @required this.type,
-    @required this.iconCode,
-  })  : assert(iconCode != null),
+    @required this.iconData,
+  })  : assert(iconData != null),
         assert(type != null);
 
   final ActionType type;
-  final int iconCode;
+  final IconData iconData;
   final String tip;
   final String text;
   final int positionReverse;
