@@ -1,6 +1,7 @@
 library markdown_editor;
 
 import 'package:flutter/material.dart';
+import 'package:markdown_core/builder.dart';
 import 'package:markdown_editor/action.dart';
 import 'package:markdown_editor/editor.dart';
 import 'package:markdown_editor/preview.dart';
@@ -31,6 +32,8 @@ class MarkdownEditor extends StatefulWidget {
     this.titleTextStyle,
     this.textStyle,
     this.appendBottomWidget,
+    this.maxWidth,
+    this.imageWidget,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -60,6 +63,9 @@ class MarkdownEditor extends StatefulWidget {
   final TextStyle textStyle;
 
   final Widget appendBottomWidget;
+
+  final double maxWidth;
+  final WidgetImage imageWidget;
 
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
@@ -133,6 +139,8 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             text: _previewText,
             padding: widget.padding,
             onTapLink: widget.onTapLink,
+            maxWidth: widget.maxWidth,
+            widgetImage: widget.imageWidget,
           ),
         ),
       ],

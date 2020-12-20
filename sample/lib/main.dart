@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:markdown_editor/markdown_editor.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(new MyApp());
 
@@ -44,6 +46,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -65,72 +75,35 @@ class _MyHomePageState extends State<MyHomePage> {
           initText: """
 Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。更多介绍请参考[百度百科](https://baike.baidu.com/item/markdown/3245829?fr=aladdin)。
 
-<br><br><br><br>
-
-###  1.标题
-
+## 1.标题
 行首加井号表示不同级别的标题(H1-H6),例如：# H1,## H2,### H3,#### H4(注意：#号后边应有英文空格)。
-#  一级标题
-##  二级标题
-###  三级标题
-####  四级标题
-#####  五级标题
-######  六级标题
+# 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
 
- 
-###  2. 文本
+## 2.文字效果
 
-+ 普通文本
+使用 * 将文字包围起来表示*斜体*，如：\\*斜体*。
+使用 ** 将文字包围起来表示**粗体**，如：\\*\\*粗体**。
+使用 ~~ 将文字包围起来表示~~删除线~~，如：\\~\\~删除线~~。
 
-直接输入的文字就是普通文本。
+如果你想使一段话中部分文字高亮显示，来起到突出强调的作用，那么可以把它用\\`包围起来，`注意`这不是单引号，而是``Tab``上方，``数字1``左边的按键（注意使用``英文``输入法）。
 
-+ 单行文本
-
-        使用两个Tab(或八个空格)符实现单行文本.
-
-+ 多行文本
-
-        多行文本和
-        单行文本异曲同工，只要在
-        每行行首加两个Tab(或八个空格)。
-
-+ 文字高亮
-
-如果你想使一段话中部分文字高亮显示，来起到突出强调的作用，那么可以把它用 \`  \`包围起来，``注意``这不是单引号，而是``Tab``上方，``数字1``左边的按键（注意使用``英文``输入法）。
-
-+ 斜体和粗体
-
-使用 * 或 ** 将文字包围起来表示斜体和粗体。
-这是 *斜体*，这是 **粗体**。
-
-###  3. 外链接
+##  3. 外链接
 
 使用 \\[描述](链接地址) 为文字增加外链接。
-这是去往 [旧时光网站](http://jiushig.com) 的链接。
+这是去往 [旧时光网站](https://www.jiushig.com) 的链接。
 
+## 4. 图片
 
-###  4. 插入图像
-使用 !\\[描述](图片链接地址) 插入图像，仅仅比链接前面多了一个!号。
-插入图片示例：
+使用 \\!\\[描述](图片链接地址) 插入图像，仅仅比链接前面多了一个!号。插入图片示例： 
 
-![旧时光](http://jiushig.oss-cn-shenzhen.aliyuncs.com/oldtime/oldtime_wallpaper.png)
+![旧时光](https://oss.jiushig.com/oldtime/oldtime_wallpaper.png)
 
-
-###  5. 文字引用
-
-行首使用 > 表示文字引用。
-
-单个引用：
-
-> 野火烧不尽，春风吹又生。
-
-当然，你也可以 使用多个>>
-
->我用了一个
->> 我用了两个
-
-
-###  6. 列表
+## 5. 列表
 
 使用 *，+，- 表示无序列表。
 
@@ -140,20 +113,53 @@ Markdown是一种可以使用普通文本编辑器编写的标记语言，通过
 
 行首加四个空格表示二级列表，以此类推。
 
-+ 编程语言
-    + 脚本语言
-        + Python
++ 一级列表
+    + 二级列表
+        + 三级列表
 
-使用数字和点表示有序列表。
+## 6. 引用
 
-1. 有序列表项 一
-2. 有序列表项 二
-3. 有序列表项 三 
+行首使用 > 表示文字引用。
+
+单个引用：
+
+> 野火烧不尽，春风吹又生。野火烧不尽，春风吹又生。
+
+当然，你也可以 使用多个>>
+
+>我用了一个
+>> 我用了两个
+
+## 7. 片段
+
+可以用 ``` 包裹一段文字，用来显示某一片段，例如显示如下代码片段：
+
+```
+\$(document).ready(function () {
+    alert('RUNOOB');
+});
+```
+
+## 8. 表格
 
 
 **Markdown还有很多强大的功能，如有疑问，就在下方评论区发出来和大家一起讨论吧。**
           """,
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8),
+          maxWidth: MediaQuery.of(context).size.width - 16,
+          onTapLink: (link) => _launchURL(link),
+          imageWidget: (imageUrl) {
+            print('imageUrl $imageUrl');
+            return CachedNetworkImage(
+              imageUrl: imageUrl,
+              placeholder: (context, url) => Container(
+                width: double.infinity,
+                height: 300,
+                child: Center(child: CircularProgressIndicator()),
+              ),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            );
+          },
         ),
       ),
     );

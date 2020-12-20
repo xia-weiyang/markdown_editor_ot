@@ -8,9 +8,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_markdown: ^0.2.0
-  url_launcher: ^5.4.1
   shared_preferences: ^0.5.3+2
+  markdown_core:
+    path: ../markdown_core
+    # git:
+    #   url: https://github.com/xia-weiyang/markdown_editor.git
+    #   ref: 6dbe60fb4ae27a18e7b080b882a27561705dbddc
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown_core/builder.dart';
+import 'package:markdown_core/markdown.dart';
 
 class MdPreview extends StatefulWidget {
   MdPreview({
@@ -8,14 +8,14 @@ class MdPreview extends StatefulWidget {
     this.text,
     this.padding = const EdgeInsets.all(0.0),
     this.onTapLink,
-    this.basicStyle,
+    this.maxWidth,
+    this.widgetImage,
   }) : super(key: key);
 
   final String text;
+  final double maxWidth;
   final EdgeInsetsGeometry padding;
-
-  /// Custom to p, a and others basic style.
-  final TextStyle basicStyle;
+  final WidgetImage widgetImage;
 
   /// Call this method when it tap link of markdown.
   /// If [onTapLink] is null,it will open the link with your default browser.
@@ -25,48 +25,25 @@ class MdPreview extends StatefulWidget {
   State<StatefulWidget> createState() => MdPreviewState();
 }
 
-class MdPreviewState extends State<MdPreview> with AutomaticKeepAliveClientMixin {
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
+class MdPreviewState extends State<MdPreview>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var style = widget.basicStyle ?? Theme.of(context).textTheme.body1;
 
     return SingleChildScrollView(
       child: Padding(
         padding: widget.padding,
-        child: MarkdownBody(
+        child: Markdown(
           data: widget.text ?? '',
-          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-            a: style.copyWith(color: Colors.blue),
-            p: style,
-            img: style,
-            blockquote: style,
-            blockquoteDecoration: new BoxDecoration(
-              border: Border(
-                left: BorderSide(
-                  color: Colors.grey.shade300,
-                  width: 5,
-                ),
-              ),
-            ),
-            blockquotePadding: 15,
-          ),
-          onTapLink: (href) {
-            print(href);
-            if (widget.onTapLink == null) {
-              _launchURL(href);
-            } else {
-              widget.onTapLink(href);
+          maxWidth: widget.maxWidth ?? MediaQuery.of(context).size.width,
+          linkTap: (link) {
+            debugPrint(link);
+            if (widget.onTapLink != null) {
+              widget.onTapLink(link);
             }
           },
+          image: widget.widgetImage,
         ),
       ),
     );
