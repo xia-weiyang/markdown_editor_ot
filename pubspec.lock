@@ -77,9 +77,11 @@ packages:
   markdown_core:
     dependency: "direct main"
     description:
-      path: "../markdown_core"
-      relative: true
-    source: path
+      path: "."
+      ref: df8f5a82cc8d79dc6e80af57c53c0cfec8a725cb
+      resolved-ref: df8f5a82cc8d79dc6e80af57c53c0cfec8a725cb
+      url: "https://github.com/xia-weiyang/markdown_core.git"
+    source: git
     version: "0.0.1"
   matcher:
     dependency: transitive
