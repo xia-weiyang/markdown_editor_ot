@@ -78,8 +78,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "67469b04bc036c15201592a877e1af45eb1491bc"
-      resolved-ref: "67469b04bc036c15201592a877e1af45eb1491bc"
+      ref: "8b931b1a2452cd07887fe1db52e5ac3c61541cc6"
+      resolved-ref: "8b931b1a2452cd07887fe1db52e5ac3c61541cc6"
       url: "https://github.com/xia-weiyang/markdown_core.git"
     source: git
     version: "0.0.1"
