@@ -13,7 +13,7 @@ dependencies:
     # path: ../markdown_core
     git:
       url: https://github.com/xia-weiyang/markdown_core.git
-      ref: 8b931b1a2452cd07887fe1db52e5ac3c61541cc6
+      ref: 3e647e3ac538e2899886a86d074e12b5660beba8
 
 dev_dependencies:
   flutter_test:
