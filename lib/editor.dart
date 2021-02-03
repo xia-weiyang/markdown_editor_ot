@@ -279,6 +279,14 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
+      sortValue: _pres.get('${key}_${ActionType.fontStrikethrough.toString()}'),
+      widget: ActionImage(
+        type: ActionType.fontStrikethrough,
+        color: widget.actionIconColor,
+        tap: _disposeText,
+      ),
+    ));
+    sortWidget.add(_SortActionWidget(
       sortValue: _pres.get('${key}_${ActionType.textQuote.toString()}'),
       widget: ActionImage(
         type: ActionType.textQuote,

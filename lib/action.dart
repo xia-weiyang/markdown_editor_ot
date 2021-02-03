@@ -141,6 +141,17 @@ const _defaultImageAttributes = <ImageAttributes>[
     ),
   ),
   ImageAttributes(
+    type: ActionType.fontStrikethrough,
+    text: '~~~~',
+    tip: '删除线',
+    positionReverse: 2,
+    iconData: const IconData(
+      0xe76a,
+      fontFamily: 'MyIconFont',
+      fontPackage: 'markdown_editor',
+    ),
+  ),
+  ImageAttributes(
     type: ActionType.textQuote,
     text: '\n>',
     tip: '文字引用',
@@ -226,6 +237,7 @@ enum ActionType {
   link,
   fontBold,
   fontItalic,
+  fontStrikethrough,
   fontDeleteLine,
   textQuote,
   list,
