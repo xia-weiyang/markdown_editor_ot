@@ -8,12 +8,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  shared_preferences: ^0.5.3+2
+  shared_preferences: ^2.0.4
   markdown_core:
     # path: ../markdown_core
     git:
       url: https://github.com/xia-weiyang/markdown_core.git
-      ref: b789e1b98b7598f9ba66214128d900c725775941
+      ref: 45005c94f65cc975666de4f13b3fb9c1b4414e94
 
 dev_dependencies:
   flutter_test:
