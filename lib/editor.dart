@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:markdown_editor/action.dart';
 import 'package:markdown_editor/customize_physics.dart';
@@ -21,6 +22,7 @@ class MdEditor extends StatefulWidget {
     this.actionIconColor,
     this.cursorColor,
     this.appendBottomWidget,
+    this.fontFamily,
   }) : super(key: key);
 
   final TextStyle titleStyle;
@@ -30,6 +32,7 @@ class MdEditor extends StatefulWidget {
   final String initText;
   final String hintTitle;
   final String hintText;
+  final String fontFamily;
 
   /// see [ImageSelectCallback]
   final ImageSelectCallback imageSelect;
@@ -142,6 +145,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                         TextStyle(
                           fontSize: 20.0,
                           color: const Color(0xFF333333),
+                          fontFamily: widget.fontFamily,
                         ),
                     decoration: InputDecoration(
                       hintText: widget.hintTitle ?? '标题',
@@ -165,7 +169,8 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                     style: widget.textStyle ??
                         TextStyle(
                           fontSize: 17,
-                          height: 1.3,
+                          height: kIsWeb ? null : 1.3,
+                          fontFamily: widget.fontFamily,
                         ),
                     onChanged: (text) {
                       _editPerform.change(text);

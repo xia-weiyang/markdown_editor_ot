@@ -10,12 +10,14 @@ class MdPreview extends StatefulWidget {
     this.onTapLink,
     this.maxWidth,
     this.widgetImage,
+    this.fontFamily,
   }) : super(key: key);
 
   final String text;
   final double maxWidth;
   final EdgeInsetsGeometry padding;
   final WidgetImage widgetImage;
+  final String fontFamily;
 
   /// Call this method when it tap link of markdown.
   /// If [onTapLink] is null,it will open the link with your default browser.
@@ -44,6 +46,7 @@ class MdPreviewState extends State<MdPreview>
             }
           },
           image: widget.widgetImage,
+          fontFamily: widget.fontFamily,
         ),
       ),
     );
