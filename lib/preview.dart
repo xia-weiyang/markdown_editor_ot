@@ -32,7 +32,6 @@ class MdPreviewState extends State<MdPreview>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
     return SingleChildScrollView(
       child: Padding(
         padding: widget.padding,

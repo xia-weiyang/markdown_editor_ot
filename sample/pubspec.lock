@@ -167,8 +167,8 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "45005c94f65cc975666de4f13b3fb9c1b4414e94"
-      resolved-ref: "45005c94f65cc975666de4f13b3fb9c1b4414e94"
+      ref: ea2ee1b0d3a7abee039834871ebe018d2b68ebef
+      resolved-ref: ea2ee1b0d3a7abee039834871ebe018d2b68ebef
       url: "https://github.com/xia-weiyang/markdown_core.git"
     source: git
     version: "0.0.1"

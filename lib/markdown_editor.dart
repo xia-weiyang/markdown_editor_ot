@@ -1,5 +1,7 @@
 library markdown_editor;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:markdown_core/builder.dart';
 import 'package:markdown_editor/action.dart';
@@ -97,8 +99,10 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
     _controller = TabController(vsync: this, length: PageType.values.length);
     _controller.addListener(() {
       if (_controller.index == PageType.preview.index) {
-        setState(() {
-          _previewText = _editorKey.currentState.getText();
+        Future.delayed(Duration(milliseconds: 500), (){
+          setState(() {
+            _previewText = _editorKey.currentState.getText();
+          });
         });
       }
       if (widget.tabChange != null) {
