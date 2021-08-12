@@ -36,7 +36,6 @@ class MarkdownEditor extends StatefulWidget {
     this.appendBottomWidget,
     this.maxWidth,
     this.imageWidget,
-    this.fontFamily,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -44,8 +43,6 @@ class MarkdownEditor extends StatefulWidget {
   final String initText;
   final String hintTitle;
   final String hintText;
-
-  final String fontFamily;
 
   /// see [MdPreview.onTapLink]
   final TapLinkCallback onTapLink;
@@ -139,7 +136,6 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             actionIconColor: widget.actionIconColor,
             cursorColor: widget.cursorColor,
             appendBottomWidget: widget.appendBottomWidget,
-            fontFamily: widget.fontFamily,
           ),
         ),
         SafeArea(
@@ -149,7 +145,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             onTapLink: widget.onTapLink,
             maxWidth: widget.maxWidth,
             widgetImage: widget.imageWidget,
-            fontFamily: widget.fontFamily,
+            textStyle: widget.textStyle,
           ),
         ),
       ],
