@@ -10,10 +10,10 @@ dependencies:
 
   shared_preferences: ^2.0.4
   markdown_core:
-    # path: ../markdown_core
+#     path: ../markdown_core
     git:
       url: https://github.com/xia-weiyang/markdown_core.git
-      ref: c009bbbfd9488f78f1faf6111fa1e1592e944d17
+      ref: 5b2517125cc9bd49a9676f104d28427e221f0658
 
 dev_dependencies:
   flutter_test:

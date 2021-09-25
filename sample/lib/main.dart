@@ -147,6 +147,11 @@ Markdown是一种可以使用普通文本编辑器编写的标记语言，通过
           """,
           padding: EdgeInsets.all(8),
           maxWidth: MediaQuery.of(context).size.width - 16,
+          textStyle: TextStyle(
+            fontSize: 18,
+            height: 1.8,
+            color: Colors.black,
+          ),
           onTapLink: (link) => _launchURL(link),
           imageWidget: (imageUrl) {
             print('imageUrl $imageUrl');
