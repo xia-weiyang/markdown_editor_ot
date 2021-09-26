@@ -16,16 +16,21 @@ class MdEditor extends StatefulWidget {
     this.initTitle,
     this.initText,
     this.hintTitle,
+    this.hintTitleStyle,
     this.hintText,
+    this.hintTextStyle,
     this.imageSelect,
     this.textChange,
     this.actionIconColor,
     this.cursorColor,
     this.appendBottomWidget,
+    this.splitWidget,
   }) : super(key: key);
 
   final TextStyle titleStyle;
   final TextStyle textStyle;
+  final TextStyle hintTitleStyle;
+  final TextStyle hintTextStyle;
   final EdgeInsetsGeometry padding;
   final String initTitle;
   final String initText;
@@ -43,6 +48,8 @@ class MdEditor extends StatefulWidget {
   final Color cursorColor;
 
   final Widget appendBottomWidget;
+
+  final Widget splitWidget;
 
   @override
   State<StatefulWidget> createState() => MdEditorState();
@@ -147,14 +154,16 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                     decoration: InputDecoration(
                       hintText: widget.hintTitle ?? '标题',
                       border: InputBorder.none,
+                      hintStyle: widget.hintTitleStyle,
                     ),
                   ),
-                  Container(
-                    height: 1.0,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFDDDDDD),
-                    ),
-                  ),
+                  widget.splitWidget ??
+                      Container(
+                        height: 1.0,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFDDDDDD),
+                        ),
+                      ),
                   TextField(
                     maxLines: null,
                     minLines: 7,
@@ -175,6 +184,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                     decoration: InputDecoration(
                       hintText: widget.hintText ?? '请输入内容',
                       border: InputBorder.none,
+                      hintStyle: widget.hintTextStyle,
                     ),
                   ),
                   widget.appendBottomWidget ?? const SizedBox(),

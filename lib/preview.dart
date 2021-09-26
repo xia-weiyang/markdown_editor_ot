@@ -8,13 +8,11 @@ class MdPreview extends StatefulWidget {
     this.text,
     this.padding = const EdgeInsets.all(0.0),
     this.onTapLink,
-    this.maxWidth,
     this.widgetImage,
     this.textStyle,
   }) : super(key: key);
 
   final String text;
-  final double maxWidth;
   final EdgeInsetsGeometry padding;
   final WidgetImage widgetImage;
   final TextStyle textStyle;
@@ -35,17 +33,21 @@ class MdPreviewState extends State<MdPreview>
     return SingleChildScrollView(
       child: Padding(
         padding: widget.padding,
-        child: Markdown(
-          data: widget.text ?? '',
-          maxWidth: widget.maxWidth ?? MediaQuery.of(context).size.width,
-          linkTap: (link) {
-            debugPrint(link);
-            if (widget.onTapLink != null) {
-              widget.onTapLink(link);
-            }
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return Markdown(
+              data: widget.text ?? '',
+              maxWidth: constraints.maxWidth,
+              linkTap: (link) {
+                debugPrint(link);
+                if (widget.onTapLink != null) {
+                  widget.onTapLink(link);
+                }
+              },
+              image: widget.widgetImage,
+              textStyle: widget.textStyle,
+            );
           },
-          image: widget.widgetImage,
-          textStyle: widget.textStyle,
         ),
       ),
     );

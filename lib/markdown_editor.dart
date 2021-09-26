@@ -33,8 +33,10 @@ class MarkdownEditor extends StatefulWidget {
     this.cursorColor,
     this.titleTextStyle,
     this.textStyle,
+    this.hintTitleTextStyle,
+    this.hintTextStyle,
     this.appendBottomWidget,
-    this.maxWidth,
+    this.splitWidget,
     this.imageWidget,
   }) : super(key: key);
 
@@ -63,10 +65,12 @@ class MarkdownEditor extends StatefulWidget {
 
   final TextStyle titleTextStyle;
   final TextStyle textStyle;
+  final TextStyle hintTitleTextStyle;
+  final TextStyle hintTextStyle;
 
   final Widget appendBottomWidget;
+  final Widget splitWidget;
 
-  final double maxWidth;
   final WidgetImage imageWidget;
 
   @override
@@ -96,7 +100,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
     _controller = TabController(vsync: this, length: PageType.values.length);
     _controller.addListener(() {
       if (_controller.index == PageType.preview.index) {
-        Future.delayed(Duration(milliseconds: 500), (){
+        Future.delayed(Duration(milliseconds: 500), () {
           setState(() {
             _previewText = _editorKey.currentState.getText();
           });
@@ -131,11 +135,14 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             hintTitle: widget.hintTitle,
             titleStyle: widget.titleTextStyle,
             textStyle: widget.textStyle,
+            hintTitleStyle: widget.hintTitleTextStyle,
+            hintTextStyle: widget.hintTextStyle,
             imageSelect: widget.imageSelect,
             textChange: widget.textChange,
             actionIconColor: widget.actionIconColor,
             cursorColor: widget.cursorColor,
             appendBottomWidget: widget.appendBottomWidget,
+            splitWidget: widget.splitWidget,
           ),
         ),
         SafeArea(
@@ -143,7 +150,6 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             text: _previewText,
             padding: widget.padding,
             onTapLink: widget.onTapLink,
-            maxWidth: widget.maxWidth,
             widgetImage: widget.imageWidget,
             textStyle: widget.textStyle,
           ),
