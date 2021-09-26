@@ -146,7 +146,6 @@ Markdown是一种可以使用普通文本编辑器编写的标记语言，通过
 **Markdown还有很多强大的功能，如有疑问，就在下方评论区发出来和大家一起讨论吧。**
           """,
           padding: EdgeInsets.all(8),
-          maxWidth: MediaQuery.of(context).size.width - 16,
           textStyle: TextStyle(
             fontSize: 18,
             height: 1.8,
