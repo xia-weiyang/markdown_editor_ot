@@ -38,6 +38,8 @@ class MarkdownEditor extends StatefulWidget {
     this.appendBottomWidget,
     this.splitWidget,
     this.imageWidget,
+    this.titleFocusNode,
+    this.textFocusNode,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
@@ -73,6 +75,8 @@ class MarkdownEditor extends StatefulWidget {
 
   final WidgetImage imageWidget;
 
+  final FocusNode titleFocusNode, textFocusNode;
+
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
 }
@@ -92,6 +96,10 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
   /// Change current [PageType]
   void setCurrentPage(PageType type) {
     _controller.index = type.index;
+  }
+
+  MdEditorState getMdEditorState(){
+    return _editorKey.currentState;
   }
 
   @override
@@ -143,6 +151,8 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             cursorColor: widget.cursorColor,
             appendBottomWidget: widget.appendBottomWidget,
             splitWidget: widget.splitWidget,
+            titleFocusNode: widget.titleFocusNode,
+            textFocusNode: widget.textFocusNode,
           ),
         ),
         SafeArea(

@@ -25,6 +25,8 @@ class MdEditor extends StatefulWidget {
     this.cursorColor,
     this.appendBottomWidget,
     this.splitWidget,
+    this.titleFocusNode,
+    this.textFocusNode,
   }) : super(key: key);
 
   final TextStyle titleStyle;
@@ -51,6 +53,8 @@ class MdEditor extends StatefulWidget {
 
   final Widget splitWidget;
 
+  final FocusNode titleFocusNode, textFocusNode;
+
   @override
   State<StatefulWidget> createState() => MdEditorState();
 }
@@ -67,6 +71,15 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
 
   String getText() {
     return _textEditingController.value.text;
+  }
+
+  // 将文本框光标移动至末尾
+  void moveTextCursorToEnd(){
+    final str = _textEditingController.text;
+    _textEditingController.value = TextEditingValue(
+        text: str,
+        selection: TextSelection.collapsed(
+            offset: str.length));
   }
 
   @override
@@ -143,6 +156,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                     cursorColor: widget.cursorColor,
                     cursorWidth: 1.5,
                     controller: _titleEditingController,
+                    focusNode: widget.titleFocusNode,
                     onChanged: (text) {
                       if (widget.textChange != null) widget.textChange();
                     },
@@ -170,7 +184,8 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                     cursorColor: widget.cursorColor,
                     cursorWidth: 1.5,
                     controller: _textEditingController,
-                    autofocus: true,
+                    focusNode: widget.textFocusNode,
+                    autofocus: false,
                     scrollPhysics: const CustomizePhysics(),
                     style: widget.textStyle ??
                         TextStyle(
