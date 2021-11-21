@@ -5,58 +5,55 @@ import 'package:flutter/material.dart';
 ///  Action image button of markdown editor.
 class ActionImage extends StatefulWidget {
   ActionImage({
-    Key key,
-    this.type,
-    this.tap,
+    Key? key,
+    required this.type,
+    required this.tap,
     this.imageSelect,
-    this.color,
+    required this.color,
     this.getCursorPosition,
-  })  : assert(color != null),
-        super(key: key);
+  })  : super(key: key);
 
   final ActionType type;
   final TapFinishCallback tap;
-  final ImageSelectCallback imageSelect;
-  final GetCursorPosition getCursorPosition;
+  final ImageSelectCallback? imageSelect;
+  final GetCursorPosition? getCursorPosition;
 
-  final Color color;
+  final Color? color;
 
   @override
   ActionImageState createState() => ActionImageState();
 }
 
 class ActionImageState extends State<ActionImage> {
-  IconData _getImageIconCode() {
+  IconData? _getImageIconCode() {
     return _defaultImageAttributes
         .firstWhere((img) => img.type == widget.type)
-        ?.iconData;
+        .iconData;
   }
 
   void _disposeAction() {
     var firstWhere =
         _defaultImageAttributes.firstWhere((img) => img.type == widget.type);
-    if (widget.tap != null && firstWhere != null) {
-      if (firstWhere.type == ActionType.image) {
-        var cursorPosition = widget?.getCursorPosition();
-        if (widget.imageSelect != null) {
-          widget.imageSelect().then(
-            (str) {
-              debugPrint('Image select $str');
-              if (str != null && str.isNotEmpty) {
-                // 延迟执行它，等待TextFiled获取焦点
-                // 否则将无法成功插入文本
-                Timer(const Duration(milliseconds: 200), () {
-                  widget.tap(widget.type, '![]($str)', 0, cursorPosition);
-                });
-              }
-            },
-            onError: print,
-          );
-          return;
-        }
+    if (firstWhere.type == ActionType.image && widget.getCursorPosition != null) {
+      var cursorPosition = widget.getCursorPosition!();
+      if (widget.imageSelect != null) {
+        widget.imageSelect!().then(
+          (str) {
+            debugPrint('Image select $str');
+            if (str.isNotEmpty) {
+              // 延迟执行它，等待TextFiled获取焦点
+              // 否则将无法成功插入文本
+              Timer(const Duration(milliseconds: 200), () {
+                widget.tap(widget.type, '![]($str)', 0, cursorPosition);
+              });
+            }
+          },
+          onError: print,
+        );
+        return;
       }
-      widget.tap(widget.type, firstWhere.text, firstWhere.positionReverse);
     }
+    widget.tap(widget.type, firstWhere.text ?? '', firstWhere.positionReverse ?? 0);
   }
 
   @override
@@ -65,7 +62,7 @@ class ActionImageState extends State<ActionImage> {
       preferBelow: false,
       message: _defaultImageAttributes
           .firstWhere((img) => img.type == widget.type)
-          ?.tip,
+          .tip,
       child: IconButton(
         icon: Icon(
           _getImageIconCode(),
@@ -253,16 +250,15 @@ class ImageAttributes {
     this.tip = '',
     this.text,
     this.positionReverse,
-    @required this.type,
-    @required this.iconData,
-  })  : assert(iconData != null),
-        assert(type != null);
+    required this.type,
+    required this.iconData,
+  });
 
   final ActionType type;
   final IconData iconData;
   final String tip;
-  final String text;
-  final int positionReverse;
+  final String? text;
+  final int? positionReverse;
 }
 
 /// Call this method after clicking the [ActionImage] and completing a series of actions.
@@ -273,7 +269,7 @@ typedef void TapFinishCallback(
   ActionType type,
   String text,
   int positionReverse, [
-  int cursorPosition,
+  int? cursorPosition,
 ]);
 
 /// Call this method after clicking the ImageAction.

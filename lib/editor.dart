@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MdEditor extends StatefulWidget {
   MdEditor({
-    Key key,
+    Key? key,
     this.titleStyle,
     this.textStyle,
     this.padding = const EdgeInsets.all(0.0),
@@ -29,31 +29,31 @@ class MdEditor extends StatefulWidget {
     this.textFocusNode,
   }) : super(key: key);
 
-  final TextStyle titleStyle;
-  final TextStyle textStyle;
-  final TextStyle hintTitleStyle;
-  final TextStyle hintTextStyle;
+  final TextStyle? titleStyle;
+  final TextStyle? textStyle;
+  final TextStyle? hintTitleStyle;
+  final TextStyle? hintTextStyle;
   final EdgeInsetsGeometry padding;
-  final String initTitle;
-  final String initText;
-  final String hintTitle;
-  final String hintText;
+  final String? initTitle;
+  final String? initText;
+  final String? hintTitle;
+  final String? hintText;
 
   /// see [ImageSelectCallback]
-  final ImageSelectCallback imageSelect;
+  final ImageSelectCallback? imageSelect;
 
-  final VoidCallback textChange;
+  final VoidCallback? textChange;
 
   /// Change icon color, eg: color of font_bold icon.
-  final Color actionIconColor;
+  final Color? actionIconColor;
 
-  final Color cursorColor;
+  final Color? cursorColor;
 
-  final Widget appendBottomWidget;
+  final Widget? appendBottomWidget;
 
-  final Widget splitWidget;
+  final Widget? splitWidget;
 
-  final FocusNode titleFocusNode, textFocusNode;
+  final FocusNode? titleFocusNode, textFocusNode;
 
   @override
   State<StatefulWidget> createState() => MdEditorState();
@@ -63,7 +63,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
   final _titleEditingController = TextEditingController(text: '');
   final _textEditingController = TextEditingController(text: '');
   var _editPerform;
-  SharedPreferences _pres;
+  SharedPreferences? _pres;
 
   String getTitle() {
     return _titleEditingController.value.text;
@@ -74,12 +74,10 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
   }
 
   // 将文本框光标移动至末尾
-  void moveTextCursorToEnd(){
+  void moveTextCursorToEnd() {
     final str = _textEditingController.text;
     _textEditingController.value = TextEditingValue(
-        text: str,
-        selection: TextSelection.collapsed(
-            offset: str.length));
+        text: str, selection: TextSelection.collapsed(offset: str.length));
   }
 
   @override
@@ -98,11 +96,11 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
     ActionType type,
     String text,
     int index, [
-    int cursorPosition,
+    int? cursorPosition,
   ]) {
     final _tempKey = 'markdown_editor_${type.toString()}';
-    _pres.setInt(_tempKey, (_pres.getInt(_tempKey) ?? 0) + 1);
-    debugPrint('$_tempKey   ${_pres.getInt(_tempKey)}');
+    _pres?.setInt(_tempKey, (_pres?.getInt(_tempKey) ?? 0) + 1);
+    debugPrint('$_tempKey   ${_pres?.getInt(_tempKey)}');
 
     var position =
         cursorPosition ?? _textEditingController.selection.base.offset;
@@ -121,7 +119,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
         selection: TextSelection.collapsed(
             offset: startText.length + text.length - index));
 
-    if (widget.textChange != null) widget.textChange();
+    if (widget.textChange != null) widget.textChange!();
 
     _editPerform.change(_textEditingController.text);
   }
@@ -158,7 +156,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                     controller: _titleEditingController,
                     focusNode: widget.titleFocusNode,
                     onChanged: (text) {
-                      if (widget.textChange != null) widget.textChange();
+                      if (widget.textChange != null) widget.textChange!();
                     },
                     style: widget.titleStyle ??
                         TextStyle(
@@ -194,7 +192,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
                         ),
                     onChanged: (text) {
                       _editPerform.change(text);
-                      if (widget.textChange != null) widget.textChange();
+                      if (widget.textChange != null) widget.textChange!();
                     },
                     decoration: InputDecoration(
                       hintText: widget.hintText ?? '请输入内容',
@@ -270,8 +268,11 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
   List<_SortActionWidget> _getSortActionWidgets() {
     final sortWidget = <_SortActionWidget>[];
     final key = 'markdown_editor';
+    final getSortValue = (ActionType type){
+      return int.parse((_pres?.get('${key}_${type.toString()}') ?? '0').toString());
+    };
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.image.toString()}'),
+      sortValue: getSortValue(ActionType.image),
       widget: ActionImage(
         type: ActionType.image,
         color: widget.actionIconColor,
@@ -281,7 +282,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.link.toString()}') ?? 9,
+      sortValue: getSortValue(ActionType.link),
       widget: ActionImage(
         type: ActionType.link,
         color: widget.actionIconColor,
@@ -289,7 +290,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.fontBold.toString()}'),
+      sortValue: getSortValue(ActionType.fontBold),
       widget: ActionImage(
         type: ActionType.fontBold,
         color: widget.actionIconColor,
@@ -297,7 +298,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.fontItalic.toString()}'),
+      sortValue: getSortValue(ActionType.fontItalic),
       widget: ActionImage(
         type: ActionType.fontItalic,
         color: widget.actionIconColor,
@@ -305,7 +306,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.fontStrikethrough.toString()}'),
+      sortValue: getSortValue(ActionType.fontStrikethrough),
       widget: ActionImage(
         type: ActionType.fontStrikethrough,
         color: widget.actionIconColor,
@@ -313,7 +314,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.textQuote.toString()}'),
+      sortValue: getSortValue(ActionType.textQuote),
       widget: ActionImage(
         type: ActionType.textQuote,
         color: widget.actionIconColor,
@@ -321,7 +322,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.list.toString()}'),
+      sortValue: getSortValue(ActionType.list),
       widget: ActionImage(
         type: ActionType.list,
         color: widget.actionIconColor,
@@ -329,7 +330,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.h4.toString()}'),
+      sortValue: getSortValue(ActionType.h4),
       widget: ActionImage(
         type: ActionType.h4,
         color: widget.actionIconColor,
@@ -337,7 +338,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.h5.toString()}'),
+      sortValue: getSortValue(ActionType.h5),
       widget: ActionImage(
         type: ActionType.h5,
         color: widget.actionIconColor,
@@ -345,7 +346,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.h1.toString()}'),
+      sortValue: getSortValue(ActionType.h1),
       widget: ActionImage(
         type: ActionType.h1,
         color: widget.actionIconColor,
@@ -353,7 +354,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.h2.toString()}'),
+      sortValue: getSortValue(ActionType.h2),
       widget: ActionImage(
         type: ActionType.h2,
         color: widget.actionIconColor,
@@ -361,7 +362,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
     sortWidget.add(_SortActionWidget(
-      sortValue: _pres.get('${key}_${ActionType.h3.toString()}'),
+      sortValue: getSortValue(ActionType.h3),
       widget: ActionImage(
         type: ActionType.h3,
         color: widget.actionIconColor,
@@ -369,7 +370,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
       ),
     ));
 
-    sortWidget.sort((a, b) => (b.sortValue ?? 0).compareTo(a.sortValue ?? 0));
+    sortWidget.sort((a, b) => (b.sortValue).compareTo(a.sortValue));
 
     return sortWidget;
   }
@@ -383,7 +384,7 @@ class _SortActionWidget {
   final int sortValue;
 
   _SortActionWidget({
-    @required this.widget,
-    @required this.sortValue,
+    required this.widget,
+    required this.sortValue,
   });
 }

@@ -19,7 +19,7 @@ enum PageType { editor, preview }
 
 class MarkdownEditor extends StatefulWidget {
   MarkdownEditor({
-    Key key,
+    Key? key,
     this.padding = const EdgeInsets.all(0.0),
     this.initTitle,
     this.initText,
@@ -37,45 +37,45 @@ class MarkdownEditor extends StatefulWidget {
     this.hintTextStyle,
     this.appendBottomWidget,
     this.splitWidget,
-    this.imageWidget,
+    required this.imageWidget,
     this.titleFocusNode,
     this.textFocusNode,
   }) : super(key: key);
 
   final EdgeInsetsGeometry padding;
-  final String initTitle;
-  final String initText;
-  final String hintTitle;
-  final String hintText;
+  final String? initTitle;
+  final String? initText;
+  final String? hintTitle;
+  final String? hintText;
 
   /// see [MdPreview.onTapLink]
-  final TapLinkCallback onTapLink;
+  final TapLinkCallback? onTapLink;
 
   /// see [ImageSelectCallback]
-  final ImageSelectCallback imageSelect;
+  final ImageSelectCallback? imageSelect;
 
   /// When page change to [PageType.preview] or [PageType.editor]
-  final TabChange tabChange;
+  final TabChange? tabChange;
 
   /// When title or text changed
-  final VoidCallback textChange;
+  final VoidCallback? textChange;
 
   /// Change icon color, eg: color of font_bold icon.
-  final Color actionIconColor;
+  final Color? actionIconColor;
 
-  final Color cursorColor;
+  final Color? cursorColor;
 
-  final TextStyle titleTextStyle;
-  final TextStyle textStyle;
-  final TextStyle hintTitleTextStyle;
-  final TextStyle hintTextStyle;
+  final TextStyle? titleTextStyle;
+  final TextStyle? textStyle;
+  final TextStyle? hintTitleTextStyle;
+  final TextStyle? hintTextStyle;
 
-  final Widget appendBottomWidget;
-  final Widget splitWidget;
+  final Widget? appendBottomWidget;
+  final Widget? splitWidget;
 
   final WidgetImage imageWidget;
 
-  final FocusNode titleFocusNode, textFocusNode;
+  final FocusNode? titleFocusNode, textFocusNode;
 
   @override
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
@@ -84,13 +84,13 @@ class MarkdownEditor extends StatefulWidget {
 class MarkdownEditorWidgetState extends State<MarkdownEditor>
     with SingleTickerProviderStateMixin {
   final GlobalKey<MdEditorState> _editorKey = GlobalKey();
-  TabController _controller;
+  late TabController _controller;
   String _previewText = '';
 
   /// Get edited Markdown title and text
   MarkdownText getMarkDownText() {
     return MarkdownText(
-        _editorKey.currentState.getTitle(), _editorKey.currentState.getText());
+        _editorKey.currentState?.getTitle() ?? '', _editorKey.currentState?.getText() ?? '');
   }
 
   /// Change current [PageType]
@@ -98,7 +98,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
     _controller.index = type.index;
   }
 
-  MdEditorState getMdEditorState(){
+  MdEditorState? getMdEditorState(){
     return _editorKey.currentState;
   }
 
@@ -110,12 +110,12 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
       if (_controller.index == PageType.preview.index) {
         Future.delayed(Duration(milliseconds: 500), () {
           setState(() {
-            _previewText = _editorKey.currentState.getText();
+            _previewText = _editorKey.currentState?.getText() ?? '';
           });
         });
       }
       if (widget.tabChange != null) {
-        widget.tabChange(_controller.index == PageType.editor.index
+        widget.tabChange!(_controller.index == PageType.editor.index
             ? PageType.editor
             : PageType.preview);
       }

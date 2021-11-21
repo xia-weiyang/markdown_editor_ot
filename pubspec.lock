@@ -99,16 +99,14 @@ packages:
       name: markdown
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   markdown_core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "5b2517125cc9bd49a9676f104d28427e221f0658"
-      resolved-ref: "5b2517125cc9bd49a9676f104d28427e221f0658"
-      url: "https://github.com/xia-weiyang/markdown_core.git"
-    source: git
-    version: "0.0.1"
+      name: markdown_core
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   matcher:
     dependency: transitive
     description:
