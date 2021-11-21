@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   url_launcher: ^6.0.6
   cached_network_image: ^3.0.0
-  markdown_editor:
+  markdown_editor_ot:
     path: ../
 
 dev_dependencies:

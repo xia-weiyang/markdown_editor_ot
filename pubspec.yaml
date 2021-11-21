@@ -1,4 +1,4 @@
-name: markdown_editor
+name: markdown_editor_ot
 description: Simple and easy to implement your markdown editor, it uses its own parser.
 version: 1.0.0
 homepage: https://github.com/xia-weiyang/markdown_editor
@@ -42,7 +42,7 @@ flutter:
   fonts:
     - family: MyIconFont
       fonts:
-        - asset: packages/markdown_editor/fonts/iconfont.ttf
+        - asset: packages/markdown_editor_ot/fonts/iconfont.ttf
 
   # example:
   # fonts:
