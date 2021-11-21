@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:markdown_editor/action.dart';
-import 'package:markdown_editor/customize_physics.dart';
-import 'package:markdown_editor/edit_perform.dart';
+import 'package:markdown_editor/src/action.dart';
+import 'package:markdown_editor/src/customize_physics.dart';
+import 'package:markdown_editor/src/edit_perform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MdEditor extends StatefulWidget {

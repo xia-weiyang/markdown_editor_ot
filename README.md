@@ -1,10 +1,23 @@
 # markdown_editor
 
-A new flutter plugin project.
+Simple and easy to implement your markdown editor, it uses its own parser.
 
-## Getting Started
+![show](https://xia-weiyang.github.io/gif/markdown_editor.gif)
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+If you only need to render, you can refer to [https://github.com/xia-weiyang/markdown_core](https://github.com/xia-weiyang/markdown_core)
 
-For help on editing plugin code, view the [documentation](https://flutter.io/developing-packages/#edit-plugin-package).
+``` dart
+MarkdownEditor(
+      initText: 'initText',
+      initTitle: 'initText',
+      onTapLink: (link){
+        print('点击了链接 $link');
+      },
+      imageWidget: (imageUrl) {
+        return // Your image widget ;
+      },
+      imageSelect: (){ // Click image select btn
+        return // selected image link;
+      },
+)
+```

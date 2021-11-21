@@ -4,9 +4,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:markdown_core/builder.dart';
-import 'package:markdown_editor/action.dart';
-import 'package:markdown_editor/editor.dart';
-import 'package:markdown_editor/preview.dart';
+import 'package:markdown_editor/src/action.dart';
+import 'package:markdown_editor/src/editor.dart';
+import 'package:markdown_editor/src/preview.dart';
 
 class MarkdownText {
   const MarkdownText(this.title, this.text);

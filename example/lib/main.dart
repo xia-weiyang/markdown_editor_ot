@@ -144,8 +144,6 @@ Markdown是一种可以使用普通文本编辑器编写的标记语言，通过
 
 ## 8. 表格
 
-
-**Markdown还有很多强大的功能，如有疑问，就在下方评论区发出来和大家一起讨论吧。**
           """,
           padding: const EdgeInsets.all(8),
           textStyle: const TextStyle(
