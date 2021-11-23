@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:markdown_core/builder.dart';
 import 'package:markdown_editor_ot/src/action.dart';
 import 'package:markdown_editor_ot/src/editor.dart';
-import 'package:markdown_editor_ot/src/preview.dart';
+import 'package:markdown_editor_ot/preview.dart';
 
 class MarkdownText {
   const MarkdownText(this.title, this.text);
