@@ -74,6 +74,8 @@ class ActionImageState extends State<ActionImage> {
   }
 }
 
+const _fontPackage = 'markdown_editor_ot';
+
 const _defaultImageAttributes = <ImageAttributes>[
   ImageAttributes(
     type: ActionType.undo,
@@ -81,7 +83,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe907,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -90,7 +92,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe874,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -101,7 +103,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe7ac,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -112,7 +114,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe7d8,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -123,7 +125,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe757,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -134,7 +136,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe762,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -145,7 +147,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe76a,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -156,7 +158,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe768,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -167,7 +169,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe764,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -178,7 +180,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe75e,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -189,7 +191,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe75f,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -200,7 +202,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe75b,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -211,7 +213,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe75c,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
   ImageAttributes(
@@ -222,7 +224,7 @@ const _defaultImageAttributes = <ImageAttributes>[
     iconData: const IconData(
       0xe75d,
       fontFamily: 'MyIconFont',
-      fontPackage: 'markdown_editor',
+      fontPackage: _fontPackage,
     ),
   ),
 ];
