@@ -63,6 +63,7 @@ class MarkdownEditor extends StatefulWidget {
   /// Change icon color, eg: color of font_bold icon.
   final Color? actionIconColor;
 
+  /// Change cursor color
   final Color? cursorColor;
 
   final TextStyle? titleTextStyle;
