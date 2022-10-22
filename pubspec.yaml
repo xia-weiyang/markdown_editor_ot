@@ -1,6 +1,6 @@
 name: markdown_editor_ot
 description: Simple and easy to implement your markdown editor, it uses its own parser.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/xia-weiyang/markdown_editor_ot
 
 environment:
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  shared_preferences: ^2.0.4
+  shared_preferences: ^2.0.15
   markdown_core: ^1.0.0
 
 dev_dependencies:
