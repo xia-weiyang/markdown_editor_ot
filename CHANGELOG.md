@@ -1,3 +1,5 @@
+## 1.0.5
+* Remove safeArea.
 ## 1.0.4
 * Add physics params.
 ## 1.0.3
