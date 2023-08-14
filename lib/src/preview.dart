@@ -10,12 +10,14 @@ class MdPreview extends StatefulWidget {
     this.onTapLink,
     required this.widgetImage,
     this.textStyle,
+    this.physics,
   }) : super(key: key);
 
   final String text;
   final EdgeInsetsGeometry padding;
   final WidgetImage widgetImage;
   final TextStyle? textStyle;
+  final ScrollPhysics? physics;
 
   /// Call this method when it tap link of markdown.
   /// If [onTapLink] is null,it will open the link with your default browser.
@@ -31,6 +33,7 @@ class MdPreviewState extends State<MdPreview>
   Widget build(BuildContext context) {
     super.build(context);
     return SingleChildScrollView(
+      physics: widget.physics,
       child: Padding(
         padding: widget.padding,
         child: LayoutBuilder(

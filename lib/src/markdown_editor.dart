@@ -36,6 +36,7 @@ class MarkdownEditor extends StatefulWidget {
     this.hintTitleTextStyle,
     this.hintTextStyle,
     this.appendBottomWidget,
+    this.physics,
     this.splitWidget,
     required this.imageWidget,
     this.titleFocusNode,
@@ -65,6 +66,8 @@ class MarkdownEditor extends StatefulWidget {
 
   /// Change cursor color
   final Color? cursorColor;
+
+  final ScrollPhysics? physics;
 
   final TextStyle? titleTextStyle;
   final TextStyle? textStyle;
@@ -133,6 +136,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
   Widget build(BuildContext context) {
     return TabBarView(
       controller: _controller,
+      physics: widget.physics,
       children: <Widget>[
         SafeArea(
           child: MdEditor(
@@ -154,6 +158,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             splitWidget: widget.splitWidget,
             titleFocusNode: widget.titleFocusNode,
             textFocusNode: widget.textFocusNode,
+            physics: widget.physics,
           ),
         ),
         SafeArea(
@@ -163,6 +168,7 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor>
             onTapLink: widget.onTapLink,
             widgetImage: widget.imageWidget,
             textStyle: widget.textStyle,
+            physics: widget.physics,
           ),
         ),
       ],

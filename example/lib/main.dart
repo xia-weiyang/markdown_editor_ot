@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:markdown_editor_ot/markdown_editor.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:markdown_editor_ot/markdown_editor_ot.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 void main() => runApp(const MyApp());
 
@@ -49,11 +49,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    await launchUrlString(url);
   }
 
   @override

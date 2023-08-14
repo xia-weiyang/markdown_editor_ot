@@ -27,6 +27,7 @@ class MdEditor extends StatefulWidget {
     this.splitWidget,
     this.titleFocusNode,
     this.textFocusNode,
+    this.physics,
   }) : super(key: key);
 
   final TextStyle? titleStyle;
@@ -38,6 +39,7 @@ class MdEditor extends StatefulWidget {
   final String? initText;
   final String? hintTitle;
   final String? hintText;
+  final ScrollPhysics? physics;
 
   /// see [ImageSelectCallback]
   final ImageSelectCallback? imageSelect;
@@ -144,6 +146,7 @@ class MdEditorState extends State<MdEditor> with AutomaticKeepAliveClientMixin {
         Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
           child: SingleChildScrollView(
+            physics: widget.physics,
             child: Padding(
               padding: widget.padding,
               child: Column(

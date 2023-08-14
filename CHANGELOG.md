@@ -1,4 +1,6 @@
-## 1.0.2
+## 1.0.4
+* Add physics params.
+## 1.0.3
 * Improve export.
 ## 1.0.2
 * Fix icon not display.
